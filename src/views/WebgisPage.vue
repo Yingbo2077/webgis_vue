@@ -1,5 +1,6 @@
 <template>
-  <header class="navbar">
+  <div class="webgis-page">
+    <header class="navbar">
       <nav>
         <ul class="nav-links">
           <li><router-link to="/">Home</router-link></li>
@@ -10,19 +11,26 @@
         </ul>
       </nav>
     </header>
-  <MapContainer />
+    <div class="map-wrapper">
+      <MapContainer />
+    </div>
+    
+    <AppFooter />
+  </div>
 </template>
+
 <style scoped>
-.result-page {
+.webgis-page {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
   min-height: 100vh;
-  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar {
-  background-color: rgb(60, 41, 67);
+  background: linear-gradient(to right, #ff9a9e, #3a4db5);
   padding: 1rem 2rem;
   display: flex;
   justify-content: center;
@@ -51,11 +59,15 @@
   text-decoration: underline;
 }
 
-.content-section {
-  padding: 4rem;
-  min-height: calc(100vh - 80px); /* 占满剩余空间 */
+.map-wrapper {
+  flex: 1;
+  position: relative;
+  height: calc(100vh - 64px - 250px); /* 导航栏高度约为64px，页脚高度约为250px */
+  min-height: 400px; /* 确保地图有最小高度 */
 }
 </style>
+
 <script setup>
 import MapContainer from '@/components/MapContainer.vue'
+import AppFooter from '@/components/AppFooter.vue';
 </script>
