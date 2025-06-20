@@ -1,18 +1,8 @@
 <template>
   <div class="home-page">
-    <header class="navbar">
-      <nav>
-        <ul class="nav-links">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/developers">Developers</router-link></li>
-          <li><router-link to="/workflow">Workflow</router-link></li>
-          <li><router-link to="/results">Results</router-link></li>
-          <li><router-link to="/webgis">WebGIS</router-link></li>
-        </ul>
-      </nav>
-    </header>
+    <AppHeader />
 
-    <main class="hero-section">
+    <div class="hero-section">
       <div class="carousel">
         <div class="carousel-container">
           <div 
@@ -39,13 +29,23 @@
         </div>
       </div>
       
+      
       <div class="hero-content">
         <div class="content-container">
           <h1>Air quality in Switzerland</h1>
           <p>Our WebGIS project focuses on air quality in Switzerland, analyzing trends of pollutants like NO₂ and PMs from 2013 to 2022. Using open data and tools like QGIS and GeoServer, we explored their relationship with land cover and population exposure. Results are presented through an interactive WebGIS and website highlighting health guideline exceedances.</p>
         </div>
       </div>
-    </main>
+
+      <div class="hero-main-title">
+        <p class="text-7xl font-bold tracking-wide">
+          <span class="font-normal">-</span>
+             SWITZERLAND
+          <span class="font-normal">-</span>
+        </p>        
+        <p class="text-2xl font-bold tracking-wide ml-2">Group 17</p>
+      </div>
+    </div>
     
     <AppFooter />
   </div>
@@ -53,6 +53,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 
 // Import all images
@@ -74,101 +75,42 @@ let slideInterval = null;
 // Function to move to next slide
 const nextSlide = () => {
   currentSlide.value = (currentSlide.value + 1) % carouselImages.length;
-  resetSlideInterval();
 };
 
 // Function to move to previous slide
 const prevSlide = () => {
   currentSlide.value = (currentSlide.value - 1 + carouselImages.length) % carouselImages.length;
-  resetSlideInterval();
 };
 
 // Function to go to a specific slide
 const goToSlide = (index) => {
   currentSlide.value = index;
-  resetSlideInterval();
-};
-
-// Reset the slideshow interval
-const resetSlideInterval = () => {
-  if (slideInterval) {
-    clearInterval(slideInterval);
-  }
-  startSlideshow();
-};
-
-// Start automatic slideshow
-const startSlideshow = () => {
-  slideInterval = setInterval(() => {
-    currentSlide.value = (currentSlide.value + 1) % carouselImages.length;
-  }, 5000); // Change slide every 5 seconds
 };
 
 // Setup on component mount
 onMounted(() => {
-  startSlideshow();
+  slideInterval = setInterval(nextSlide, 5000);
 });
 
 // Clean up on component unmount
 onBeforeUnmount(() => {
-  if (slideInterval) {
-    clearInterval(slideInterval);
-  }
+  clearInterval(slideInterval);
 });
 </script>
 
 <style scoped>
 .home-page {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
 }
 
-.navbar {
-  background: linear-gradient(to right, #ff9a9e, #3a4db5);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
-  flex-shrink: 0; /* Prevent navbar from shrinking */
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  display: inline;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
 .hero-section {
-  height: 80vh; /* Use viewport height directly */
-  min-height: 700px;
+  height: 850px; 
   position: relative;
   overflow: hidden;
-  flex-shrink: 0; /* Prevent hero section from shrinking */
 }
 
 .carousel {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
 }
@@ -176,7 +118,6 @@ onBeforeUnmount(() => {
 .carousel-container {
   width: 100%;
   height: 100%;
-  position: relative;
 }
 
 .carousel-slide {
@@ -189,132 +130,94 @@ onBeforeUnmount(() => {
   background-position: center;
   opacity: 0;
   transition: opacity 1s ease-in-out;
-  transform: scale(1.05); /* Slightly scale up the image to avoid empty edges */
 }
 
 .carousel-slide.active {
   opacity: 1;
 }
 
+.hero-content {
+  position: absolute;
+  bottom: 20%;
+  left: 8%;
+  z-index: 2;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  border-radius: 15px;
+  width: 40%;
+  max-width: 600px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.content-container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.content-container p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 .carousel-navigation {
   position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   z-index: 5;
 }
 
 .nav-button {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
+  width: 45px;
+  height: 45px;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
-  z-index: 10;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .nav-button:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .carousel-dots {
   display: flex;
-  gap: 15px;
+  gap: 10px;
 }
 
 .dot {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
 }
 
 .dot.active {
   background-color: white;
-  transform: scale(1.2);
 }
 
-.dot:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  transform: scale(1.2);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding-left: 5%;
-  box-sizing: border-box;
-}
-
-.content-container {
-  max-width: 695px;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-}
-
-.hero-content h1 {
+.hero-main-title {
+  position: absolute;
+  bottom: 30%;
+  right: 10%;
   color: white;
-  font-size: 3.5rem;
-  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-  margin-top: 0;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
+  z-index: 2;
   text-align: left;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.hero-content p {
-  color: white;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-  margin: 0;
-}
 
-@media (max-width: 768px) {
-  .hero-content {
-    padding-left: 3%;
-    padding-right: 5%;
-  }
-  
-  .content-container {
-    max-width: 90%;
-  }
-  
-  .hero-content h1 {
-    font-size: 2.5rem;
-  }
-  
-  .hero-content p {
-    font-size: 1rem;
-  }
-  
-  .nav-button {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-  }
-}
+
 </style>
 
 
