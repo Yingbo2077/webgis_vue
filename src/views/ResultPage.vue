@@ -1,16 +1,6 @@
 <template>
   <div class="result-page">
-    <header class="navbar">
-      <nav>
-        <ul class="nav-links">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/developers">Developers</router-link></li>
-          <li><router-link to="/workflow">Workflow</router-link></li>
-          <li><router-link to="/results">Results</router-link></li>
-          <li><router-link to="/webgis">WebGIS</router-link></li>
-        </ul>
-      </nav>
-    </header>
+    <AppHeader />
 
     <main class="content-section">
       <h1 class="page-title">Air Quality Analysis Results</h1>
@@ -109,6 +99,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 
 // Sample data
@@ -224,39 +215,9 @@ const tableData = ref([
   flex-direction: column;
 }
 
-.navbar {
-  background: linear-gradient(to right, #ff9a9e, #3a4db5);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  display: inline;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
 .content-section {
-  padding: 2rem;
-  flex: 1;
+  padding: 4rem 2rem;
+  flex-grow: 1;
 }
 
 .page-title {
