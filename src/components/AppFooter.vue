@@ -1,6 +1,6 @@
 <template>
-  <footer class="text-gray-800 bg-gradient-to-r from-[#dde5b4] via-[#adc178] to-[#828b6a]">
-    <!-- Main Footer Content -->
+<footer class="text-gray-800 bg-[linear-gradient(to_right,_#ff9a9e,_#3a4db5)]">    
+  <!-- Main Footer Content -->
     <div class="container mx-auto p-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- About Section -->
