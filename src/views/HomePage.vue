@@ -1,18 +1,8 @@
 <template>
   <div class="home-page">
-    <header class="navbar">
-      <nav>
-        <ul class="nav-links">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/developers">Developers</router-link></li>
-          <li><router-link to="/workflow">Workflow</router-link></li>
-          <li><router-link to="/results">Results</router-link></li>
-          <li><router-link to="/webgis">WebGIS</router-link></li>
-        </ul>
-      </nav>
-    </header>
+    <AppHeader />
 
-    <main class="hero-section">
+    <div class="hero-section">
       <div class="carousel">
         <div class="carousel-container">
           <div 
@@ -39,20 +29,152 @@
         </div>
       </div>
       
+      
       <div class="hero-content">
         <div class="content-container">
           <h1>Air quality in Switzerland</h1>
           <p>Our WebGIS project focuses on air quality in Switzerland, analyzing trends of pollutants like NO₂ and PMs from 2013 to 2022. Using open data and tools like QGIS and GeoServer, we explored their relationship with land cover and population exposure. Results are presented through an interactive WebGIS and website highlighting health guideline exceedances.</p>
         </div>
       </div>
-    </main>
-    
+
+      <div class="hero-main-title">
+        <p class="text-7xl font-bold tracking-wide">
+          <span class="font-normal">-</span>
+             SWITZERLAND
+          <span class="font-normal">-</span>
+        </p>        
+        <p class="text-2xl font-bold tracking-wide ml-2">Group 17</p>
+      </div>
+    </div>
+
+    <!-- Combined Sections Container with shared background -->
+    <div class="relative">
+      <!-- Background Image -->
+      <div 
+        class="absolute inset-0 w-full h-full" 
+        :style="{
+          backgroundImage: `url(${switzerland2})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          opacity: '0.2'
+        }"
+      ></div>
+
+      <!-- Core Modules Section -->
+      <div class="relative py-32 px-24 h-[750px] bg-transparent ">
+        <div class="flex flex-row justify-between items-center">
+          <!-- Text Content -->
+          <div class="w-1/3  mr-8 backdrop-blur-sm bg-white/30 p-8 rounded-lg">
+            <h2 class="text-4xl font-serif font-bold mb-4">Explore Our 
+              <br/>Website</h2>
+            <p class="text-gray-600 mb-8">
+              Explore the key components of our project. Each module offers a unique perspective on our air quality analysis, from the development process to the final interactive map.
+            </p>
+            <a href="#" class="inline-block bg-white/50 text-gray-800 font-bold py-2 px-6 border border-gray-300 rounded-md hover:bg-white/70 transition-colors">
+              SEE MORE
+            </a>
+          </div>
+
+          <!-- Scrollable Cards -->
+          <div class="w-2/3">
+            <div class="flex overflow-x-auto space-x-8 pt-3 pb-4 pl-4">
+              <!-- Card 1: Developers -->
+              <router-link to="/developers" :class="cardClasses">
+                <div :class="cardImageClasses" :style="{ backgroundImage: `url(${developerBg})` }"></div>
+                <div :class="cardOverlayClasses"></div>
+                <div :class="cardTextClasses">
+                  <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm pb-4">
+                    <p class="underline pb-1 text-base">Meet the people behind the platform.</p>
+                    <p class="text-sm">This page showcases each member's role, technical expertise, and contact information.</p>
+                  </div>
+                  <p class="font-bold text-xl pb-8">Developers</p>
+                </div>
+              </router-link>
+
+              <!-- Card 2: Workflow -->
+              <router-link to="/workflow" :class="cardClasses">
+                <div :class="cardImageClasses" :style="{ backgroundImage: `url(${workflowBg})` }"></div>
+                <div :class="cardOverlayClasses"></div>
+                <div :class="cardTextClasses">
+                  <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300  pb-4">
+                    <p class="underline pb-1 text-base">Explore our development journey.</p>
+                    <p class="text-sm">Discover the methodologies, tools, and processes we used to create this platform.</p>
+                  </div>
+                  <p class="font-bold text-xl pb-8">Workflow</p>
+                </div>
+              </router-link>
+
+              <!-- Card 3: Results -->
+              <router-link to="/results" :class="cardClasses">
+                <div :class="cardImageClasses" :style="{ backgroundImage: `url(${resultBg})` }"></div>
+                <div :class="cardOverlayClasses"></div>
+                <div :class="cardTextClasses">
+                  <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm pb-4">
+                    <p class="underline pb-1 text-base">Explore our findings.</p>
+                    <p class="text-sm">View comprehensive analysis and insights from our air quality research in Switzerland.</p>
+                  </div>
+                  <p class="font-bold text-xl pb-8">Results</p>
+                </div>
+              </router-link>
+
+              <!-- Card 4: WebGIS -->
+              <router-link to="/webgis" :class="cardClasses">
+                <div :class="cardImageClasses" :style="{ backgroundImage: `url(${webgisBg})` }"></div>
+                <div :class="cardOverlayClasses"></div>
+                <div :class="cardTextClasses">
+                  <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm pb-4">
+                    <p class="underline pb-1 text-base">Interactive mapping platform.</p>
+                    <p class="text-sm">Explore our interactive WebGIS platform for detailed air quality visualization.</p>
+                  </div>
+                  <p class="font-bold text-xl pb-8 ">WebGIS</p>
+                </div>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Findings Section -->
+      <div class="relative flex items-center justify-center px-32 pt-8 pb-16 h-[750px] bg-transparent">
+        <div class="flex flex-col items-center justify-center h-full  ">
+          <!-- Text Content -->
+          <div class="backdrop-blur-sm bg-white/50 p-12 rounded-lg w-[1200px] max-w-[90vw] mx-auto">            <div class="text-center">
+              <p class="text-[#90a955] text-lg mb-4">KEY FINDINGS</p>
+              <h2 class="text-5xl font-serif mb-8">
+                <span class="italic">What We Discovered</span></h2>
+              
+              <!-- Decorative Line -->
+              <div class="flex items-center justify-center gap-4 mb-8">
+                <div class="h-[1px] w-48 bg-gray-300"></div>
+                <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+                <div class="h-[1px] w-64 bg-gray-300"></div>
+              </div>
+
+              <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Through comprehensive analysis of air quality data across Switzerland from 2013 to 2022, we've uncovered significant patterns and trends in pollutant concentrations and their impact on public health.
+              </p>
+              <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
+                Our research reveals the complex relationship between urban development, population density, and air quality. We've identified critical areas where NO₂ and PM concentrations exceed WHO guidelines, seasonal variations in pollutant levels, and the effectiveness of current air quality management strategies.
+              </p>
+              <p class="text-gray-600 max-w-2xl mx-auto">
+                Explore our detailed findings through interactive visualizations and comprehensive reports. Our analysis provides valuable insights for policymakers, researchers, and citizens interested in understanding and improving air quality in Switzerland.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <AppFooter />
+
+    
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 
 // Import all images
@@ -60,6 +182,17 @@ import switzerland1 from '@/assets/瑞士1.jpg';
 import switzerland2 from '@/assets/瑞士2.jpg';
 import switzerland3 from '@/assets/瑞士3.jpg';
 import switzerland4 from '@/assets/瑞士4.jpg';
+// Import card background images
+import developerBg from '@/assets/developer.jpg';
+import workflowBg from '@/assets/workflow.jpg';
+import resultBg from '@/assets/result.jpg';
+import webgisBg from '@/assets/webgis.jpg';
+
+// Reusable classes for cards
+const cardClasses = 'group relative flex-shrink-0 w-96 h-[450px] bg-gray-300 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300';
+const cardImageClasses = 'absolute inset-0 bg-cover bg-center pointer-events-none will-change-transform';
+const cardOverlayClasses = 'absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-50 transition-all duration-300 pointer-events-none will-change-transform';
+const cardTextClasses = 'absolute bottom-0 left-0 p-6 text-white z-10';
 
 const carouselImages = [
   switzerland1,
@@ -74,101 +207,42 @@ let slideInterval = null;
 // Function to move to next slide
 const nextSlide = () => {
   currentSlide.value = (currentSlide.value + 1) % carouselImages.length;
-  resetSlideInterval();
 };
 
 // Function to move to previous slide
 const prevSlide = () => {
   currentSlide.value = (currentSlide.value - 1 + carouselImages.length) % carouselImages.length;
-  resetSlideInterval();
 };
 
 // Function to go to a specific slide
 const goToSlide = (index) => {
   currentSlide.value = index;
-  resetSlideInterval();
-};
-
-// Reset the slideshow interval
-const resetSlideInterval = () => {
-  if (slideInterval) {
-    clearInterval(slideInterval);
-  }
-  startSlideshow();
-};
-
-// Start automatic slideshow
-const startSlideshow = () => {
-  slideInterval = setInterval(() => {
-    currentSlide.value = (currentSlide.value + 1) % carouselImages.length;
-  }, 5000); // Change slide every 5 seconds
 };
 
 // Setup on component mount
 onMounted(() => {
-  startSlideshow();
+  slideInterval = setInterval(nextSlide, 5000);
 });
 
 // Clean up on component unmount
 onBeforeUnmount(() => {
-  if (slideInterval) {
-    clearInterval(slideInterval);
-  }
+  clearInterval(slideInterval);
 });
 </script>
 
 <style scoped>
 .home-page {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
 }
 
-.navbar {
-  background: linear-gradient(to right, #ff9a9e, #3a4db5);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
-  flex-shrink: 0; /* Prevent navbar from shrinking */
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  display: inline;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
 .hero-section {
-  height: 80vh; /* Use viewport height directly */
-  min-height: 700px;
+  height: 850px; 
   position: relative;
   overflow: hidden;
-  flex-shrink: 0; /* Prevent hero section from shrinking */
 }
 
 .carousel {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
 }
@@ -176,7 +250,6 @@ onBeforeUnmount(() => {
 .carousel-container {
   width: 100%;
   height: 100%;
-  position: relative;
 }
 
 .carousel-slide {
@@ -189,132 +262,92 @@ onBeforeUnmount(() => {
   background-position: center;
   opacity: 0;
   transition: opacity 1s ease-in-out;
-  transform: scale(1.05); /* Slightly scale up the image to avoid empty edges */
 }
 
 .carousel-slide.active {
   opacity: 1;
 }
 
+.hero-content {
+  position: absolute;
+  bottom: 20%;
+  left: 8%;
+  z-index: 2;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  border-radius: 15px;
+  width: 40%;
+  max-width: 600px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.content-container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.content-container p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
 .carousel-navigation {
   position: absolute;
-  bottom: 40px;
-  left: 0;
-  right: 0;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   z-index: 5;
 }
 
 .nav-button {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
+  width: 45px;
+  height: 45px;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
-  z-index: 10;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .nav-button:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .carousel-dots {
   display: flex;
-  gap: 15px;
+  gap: 10px;
 }
 
 .dot {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
 }
 
 .dot.active {
   background-color: white;
-  transform: scale(1.2);
 }
 
-.dot:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-  transform: scale(1.2);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding-left: 5%;
-  box-sizing: border-box;
-}
-
-.content-container {
-  max-width: 695px;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
-}
-
-.hero-content h1 {
+.hero-main-title {
+  position: absolute;
+  bottom: 30%;
+  right: 10%;
   color: white;
-  font-size: 3.5rem;
-  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-  margin-top: 0;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
+  z-index: 2;
   text-align: left;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.hero-content p {
-  color: white;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-  margin: 0;
-}
-
-@media (max-width: 768px) {
-  .hero-content {
-    padding-left: 3%;
-    padding-right: 5%;
-  }
-  
-  .content-container {
-    max-width: 90%;
-  }
-  
-  .hero-content h1 {
-    font-size: 2.5rem;
-  }
-  
-  .hero-content p {
-    font-size: 1rem;
-  }
-  
-  .nav-button {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-  }
-}
 </style>
 
 

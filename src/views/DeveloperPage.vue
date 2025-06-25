@@ -1,16 +1,6 @@
 <template>
   <div class="developer-page" :class="getSelectedClass()">
-    <header class="navbar">
-      <nav>
-        <ul class="nav-links">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/developers">Developers</router-link></li>
-          <li><router-link to="/workflow">Workflow</router-link></li>
-          <li><router-link to="/results">Results</router-link></li>
-          <li><router-link to="/webgis">WebGIS</router-link></li>
-        </ul>
-      </nav>
-    </header>
+    <AppHeader />
 
     <main class="content-section">
       <h1 class="page-title">Development Team</h1>
@@ -78,6 +68,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 
 const selectedMember = ref(null);
@@ -141,61 +132,15 @@ const closeModal = () => {
 
 <style scoped>
 .developer-page {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   flex-direction: column;
-  position: relative;
-}
-
-.developer-page::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-  opacity: 0.3;
-  pointer-events: none;
-}
-
-.navbar {
-  background: linear-gradient(to right, #ff9a9e, #3a4db5);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  display: inline;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .content-section {
+  flex-grow: 1;
   padding: 4rem 2rem;
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
