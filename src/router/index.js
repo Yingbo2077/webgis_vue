@@ -5,13 +5,19 @@ import WebgisPage from '@/views/WebgisPage.vue'
 import DeveloperPage from '@/views/DeveloperPage.vue'
 import WorkflowPage from '@/views/WorkflowPage.vue'
 import ResultsPage from '@/views/ResultPage.vue'
+import AirPollutantPage from '@/views/AirPollutantPage.vue'
+import LandCoverPage from '@/views/LandCoverPage.vue'
+import PopulationPage from '@/views/PopulationPage.vue'
 
 const routes = [
   { path: '/',component: HomePage },
   { path: '/developers', component:DeveloperPage },
   { path: '/workflow', component:WorkflowPage },
   { path: '/results', component: ResultsPage },
-  { path: '/webgis', component: WebgisPage}
+  { path: '/webgis', component: WebgisPage},
+  { path: '/workflow/air-pollutant', component: AirPollutantPage },
+  { path: '/workflow/land-cover', component: LandCoverPage },
+  { path: '/workflow/population', component: PopulationPage }
 ]
 
 const router = createRouter({
