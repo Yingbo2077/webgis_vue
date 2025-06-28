@@ -76,8 +76,8 @@ const selectedIndex = ref(1); // Start with middle person (Emily Johnson)
 
 const teamMembers = ref([
   {
-    name: 'John Smith',
-    role: 'GIS Developer',
+    name: 'Esteban Ceccarelli',
+    role: 'Geotechnical Engineer',
     description: 'Responsible for core WebGIS functionality development, focusing on spatial data processing and map interaction features. With over 5 years of experience in geospatial technologies.',
     avatar: 'https://via.placeholder.com/150',
     skills: ['OpenLayers', 'PostGIS', 'Python', 'JavaScript', 'Spatial Analysis'],
