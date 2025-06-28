@@ -6,13 +6,6 @@
       <h1 class="page-title">Air Quality Analysis Results</h1>
       
       <div class="filter-section">
-        <div class="filter-group">
-          <label for="region-select">Region:</label>
-          <select id="region-select" v-model="selectedRegion">
-            <option value="all">All Regions</option>
-            <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
-          </select>
-        </div>
         
         <div class="filter-group">
           <label for="pollutant-select">Pollutant:</label>
@@ -36,7 +29,7 @@
       
       <div class="results-container">
         <div class="chart-container">
-          <h3>{{ selectedPollutantLabel }} Concentration Trend ({{ selectedRegionLabel }})</h3>
+          <h3>{{ selectedPollutantLabel }} Concentration Trend</h3>
           <div class="chart-placeholder">
             <!-- This will be replaced with an actual chart component in the future -->
             <div class="chart-mock">
@@ -103,9 +96,6 @@ import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 
 // Sample data
-const regions = ref(['Zurich', 'Geneva', 'Bern', 'Basel', 'Lausanne']);
-const selectedRegion = ref('all');
-
 const pollutants = ref([
   { value: 'pm25', label: 'PM2.5' },
   { value: 'pm10', label: 'PM10' },
@@ -116,9 +106,6 @@ const selectedPollutant = ref('pm25');
 const selectedTimePeriod = ref('week');
 
 // Computed properties
-const selectedRegionLabel = computed(() => {
-  return selectedRegion.value === 'all' ? 'All Regions' : selectedRegion.value;
-});
 
 const selectedPollutantLabel = computed(() => {
   const found = pollutants.value.find(p => p.value === selectedPollutant.value);
