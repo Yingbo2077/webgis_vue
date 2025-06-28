@@ -110,8 +110,6 @@ const pollutants = ref([
   { value: 'pm25', label: 'PM2.5' },
   { value: 'pm10', label: 'PM10' },
   { value: 'no2', label: 'NO₂' },
-  { value: 'o3', label: 'O₃' },
-  { value: 'so2', label: 'SO₂' }
 ]);
 const selectedPollutant = ref('pm25');
 
