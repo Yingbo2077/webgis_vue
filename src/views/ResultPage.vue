@@ -93,7 +93,6 @@ const pollutants = ref([
 ]);
 const selectedPollutant = ref('pm25');
 
-const selectedTimePeriod = ref('week');
 
 // Computed properties
 
