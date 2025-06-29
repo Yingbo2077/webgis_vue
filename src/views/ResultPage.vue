@@ -30,21 +30,6 @@
           <h3>{{ selectedPollutantLabel }} Concentration Trend</h3>
           <div class="chart-placeholder">
             
-            
-            import matplotlib.pyplot as plt
-
-            x = [1, 2, 3, 4, 5]
-            y = [2, 4, 1, 3, 5]
-
-            plt.plot(x, y, marker='o', linestyle='-', color='blue')
-            plt.xlabel("Time")
-            plt.ylabel("Value")
-            plt.title("Sensor Data")
-            plt.grid(True)
-            plt.xlim(0, 6)
-            plt.ylim(0, 6)
-            plt.show()
-  
 
 
 
