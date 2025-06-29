@@ -139,9 +139,9 @@ const statsData = ref([
 
 // Sample table data
 const dataNO2 = ref([
-  {year: '2013', minimum: '1.89', maximum: '19.39', mean: '7.04', statusClass: '2'},
-  {year: '2014', minimum: '1.92', maximum: '18.76', mean: '7.01', statusClass: '2'},
-  {year: '2015', minimum: '3.58', maximum: '23.50', mean: '9.72', statusClass: '2'},
+  {year: '2013', minimum: '1.89', maximum: '19.39', mean: '7.04', statusClass: 'good'},
+  {year: '2014', minimum: '1.92', maximum: '18.76', mean: '7.01', statusClass: 'good'},
+  {year: '2015', minimum: '3.58', maximum: '23.50', mean: '9.72', statusClass: 'good'},
   {year: '2016', minimum: '2.94', maximum: '21.13', mean: '9.06', statusClass: '2'},
   {year: '2017', minimum: '3.04', maximum: '20.86', mean: '8.71', statusClass: '2'},
   {year: '2018', minimum: '1.77', maximum: '17.21', mean: '6.40', statusClass: '2'},
