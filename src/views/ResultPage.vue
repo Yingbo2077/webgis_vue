@@ -171,7 +171,7 @@ const dataPM10 = ref([
 const tableData = computed(() => {
   if (selectedPollutantLabel.value === 'NO₂') return dataPM10
   if (selectedPollutantLabel.value === 'PM2.5') return dataPM25
-  if (selectedPollutantLabel.value === 'PM10') return dataPM10
+  if (selectedPollutantLabel.value === 'PM10') return dataNO2
   return []
 })
 
