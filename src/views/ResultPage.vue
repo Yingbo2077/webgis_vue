@@ -41,7 +41,7 @@
                 <td>{{ item.maximum }}</td>
                 <td>{{ item.mean }}</td>
                 <td>
-                    <span class="status-badge" :class="item.statusClass"></span>
+                    <span class="status-badge" :class="item.statusClass">
                   {{ item.statusClass }}
                   </span>
                 </td>
