@@ -31,16 +31,14 @@
               </tr>
             </thead>
             <tbody>
+              <p v-if="selectedPollutantLabel === 'NO₂'"></p>
+              <p v-else-if="selectedPollutantLabel === 'PM2.5'"></p>
+              <p v-else-if="selectedPollutantLabel === 'PM10'"></p>
               <tr v-for="(item, index) in tableData" :key="index">
                 <td>{{ item.year }}</td>
                 <td>{{ item.minimum }}</td>
                 <td>{{ item.maximum }}</td>
                 <td>{{ item.mean }}</td>
-                <td>
-                  <span class="status-badge" :class="item.statusClass">
-                    {{ item.status }}
-                  </span>
-                </td>
               </tr>
             </tbody>
           </table>
@@ -134,81 +132,50 @@ const statsData = ref([
 ]);
 
 // Sample table data
-<p v-if="selectedPollutantLabel === 'NO₂'">
-const tableData = ref([
-  { 
-    year: '2013', 
-    minimum: '1.89', 
-    maximum: '19.39', 
-    mean: '7.04', 
-  },
-  { 
-    year: '2014', 
-    minimum: '1.92', 
-    maximum: '18.76', 
-    mean: '7.01', 
-  },
-  { 
-    year: '2015', 
-    minimum: '3.58', 
-    maximum: '23.50', 
-    mean: '9.72', 
-  },
-  { 
-    year: '2016', 
-    minimum: '2.94', 
-    maximum: '21.13', 
-    mean: '9.06', 
-  },
-  { 
-    year: '2017', 
-    minimum: '3.04', 
-    maximum: '20.86', 
-    mean: '8.71', 
-  },
-  { 
-    year: '2018', 
-    minimum: '1.77', 
-    maximum: '17.21', 
-    mean: '6.40', 
-  },
-  { 
-    year: '2019', 
-    minimum: '1.51', 
-    maximum: '18.89', 
-    mean: '5.93', 
-  },
-  { 
-    year: '2020', 
-    minimum: '1.27', 
-    maximum: '16.09', 
-    mean: '5.64', 
-  },
-  { 
-    year: '2021', 
-    minimum: '1.61', 
-    maximum: '16.77', 
-    mean: '6.00', 
-  },
-  { 
-    year: '2022', 
-    minimum: '1.59', 
-    maximum: '18.76', 
-    mean: '6.20', 
-  }
-]);
-</p>
+const dataNO2 = [
+  {year: '2013', minimum: '1.89', maximum: '19.39', mean: '7.04'},
+  {year: '2014', minimum: '1.92', maximum: '18.76', mean: '7.01'},
+  {year: '2015', minimum: '3.58', maximum: '23.50', mean: '9.72'},
+  {year: '2016', minimum: '2.94', maximum: '21.13', mean: '9.06'},
+  {year: '2017', minimum: '3.04', maximum: '20.86', mean: '8.71'},
+  {year: '2018', minimum: '1.77', maximum: '17.21', mean: '6.40'},
+  {year: '2019', minimum: '1.51', maximum: '18.89', mean: '5.93'},
+  {year: '2020', minimum: '1.27', maximum: '16.09', mean: '5.64'},
+  {year: '2021', minimum: '1.61', maximum: '16.77', mean: '6.00'},
+  {year: '2022', minimum: '1.59', maximum: '18.76', mean: '6.20'}];
 
-<p v-else-if="{{ selectedPollutantLabel }} === 'PM2.5'">
+const dataPM25 = ref([
+  {year: '2013', minimum: '3.72', maximum: '17.51', mean: '8.87'},
+  {year: '2014', minimum: '3.62', maximum: '12.52', mean: '7.15'},
+  {year: '2015', minimum: '5.72', maximum: '16.99', mean: '10.29'},
+  {year: '2016', minimum: '4.79', maximum: '16.88', mean: '9.61'},
+  {year: '2017', minimum: '4.96', maximum: '14.64', mean: '8.24'},
+  {year: '2018', minimum: '3.55', maximum: '12.33', mean: '7.50'},
+  {year: '2019', minimum: '3.70', maximum: '15.82', mean: '6.81'},
+  {year: '2020', minimum: '3.54', maximum: '17.46', mean: '6.48'},
+  {year: '2021', minimum: '4.26', maximum: '18.14', mean: '6.85'},
+  {year: '2022', minimum: '3.40', maximum: '15.90', mean: '7.32'}]);
+
+const dataPM10 = ref([
+  {year: '2013', minimum: '8.38', maximum: '20.83', mean: '13.67'},
+  {year: '2014', minimum: '6.05', maximum: '16.31', mean: '10.44'},
+  {year: '2015', minimum: '7.51', maximum: '20.41', mean: '13.02'},
+  {year: '2016', minimum: '6.52', maximum: '19.82', mean: '12.00'},
+  {year: '2017', minimum: '6.40', maximum: '17.86', mean: '10.73'},
+  {year: '2018', minimum: '4.91', maximum: '16.15', mean: '9.87'},
+  {year: '2019', minimum: '5.11', maximum: '18.90', mean: '9.49'},
+  {year: '2020', minimum: '4.87', maximum: '20.27', mean: '8.63'},
+  {year: '2021', minimum: '6.32', maximum: '23.36', mean: '9.97'},
+  {year: '2022', minimum: '4.40', maximum: '20.88', mean: '10.52'}]);
+  
+const tableData = computed(() => {
+  if (selectedPollutantLabel.value === 'NO₂') return dataNO2
+  if (selectedPollutantLabel.value === 'PM2.5') return dataPM25
+  if (selectedPollutantLabel.value === 'PM10') return dataPM10
+  return []
+})
 
 
-</p>
-
-
-<p v-else>
-
-
-</p>
 </script>
 
 <style scoped>
