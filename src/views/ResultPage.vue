@@ -31,8 +31,8 @@
               </tr>
             </thead>
             <tbody>
-              <p v-if="selectedPollutantLabel === 'PM2.5'"></p>
-              <p v-else-if="selectedPollutantLabel === 'NO₂'"></p>
+              <p v-if="selectedPollutantLabel === 'NO₂'"></p>
+              <p v-else-if="selectedPollutantLabel === 'PM2.5'"></p>
               <p v-else-if="selectedPollutantLabel === 'PM10'"></p>
               <tr v-for="(item, index) in tableData" :key="index">
                 <td>{{ item.year }}</td>
@@ -89,7 +89,7 @@ const pollutants = ref([
   { value: 'pm10', label: 'PM10' },
   { value: 'no2', label: 'NO₂' },
 ]);
-const selectedPollutant = ref('pm25');
+
 
 
 // Computed properties
