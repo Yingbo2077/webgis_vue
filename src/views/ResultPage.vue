@@ -15,25 +15,40 @@
             </option>
           </select>
         </div>
-        
-        <div class="filter-group">
-          <label for="time-period">Time Period:</label>
-          <select id="time-period" v-model="selectedTimePeriod">
-            <option value="month">Monthly</option>
-            <option value="year">Yearly</option>
-          </select>
-        </div>
       </div>
       
       <div class="results-container">
+
+        <div class="table-container">
+          <h3>{{ selectedPollutantLabel }} Anual Concentration</h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Minimum Concentration</th>
+                <th>Maximum Concentration</th>
+                <th>Mean Concentration</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in tableData" :key="index">
+                <td>{{ item.year }}</td>
+                <td>{{ item.minimum }}</td>
+                <td>{{ item.maximum }}</td>
+                <td>{{ item.mean }}</td>
+                <td>
+                  <span class="status-badge" :class="item.statusClass">
+                    {{ item.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div class="chart-container">
           <h3>{{ selectedPollutantLabel }} Concentration Trend</h3>
-          <div class="chart-placeholder">
-            
-
-
-
-
+          <div class="chart-placeholder">                   
             <!-- This will be replaced with an actual chart component in the future -->
             <div class="chart-mock">
               <div class="chart-line"></div>
@@ -57,34 +72,6 @@
               </p>
             </div>
           </div>
-        </div>
-        
-        <div class="table-container">
-          <h3>Detailed Data</h3>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Region</th>
-                <th>{{ selectedPollutantLabel }} Concentration</th>
-                <th>Air Quality Index</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in tableData" :key="index">
-                <td>{{ item.date }}</td>
-                <td>{{ item.region }}</td>
-                <td>{{ item.concentration }}</td>
-                <td>{{ item.aqi }}</td>
-                <td>
-                  <span class="status-badge" :class="item.statusClass">
-                    {{ item.status }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </main>
@@ -150,44 +137,64 @@ const statsData = ref([
 // Sample table data
 const tableData = ref([
   { 
-    date: '2023-06-01', 
-    region: 'Zurich', 
-    concentration: '15.2 µg/m³', 
-    aqi: 58, 
-    status: 'Good',
-    statusClass: 'good'
+    year: '2013', 
+    minimum: '1.89', 
+    maximum: '19.39', 
+    mean: '7.04', 
   },
   { 
-    date: '2023-06-02', 
-    region: 'Geneva', 
-    concentration: '22.7 µg/m³', 
-    aqi: 75, 
-    status: 'Moderate',
-    statusClass: 'moderate'
+    year: '2014', 
+    minimum: '1.92', 
+    maximum: '18.76', 
+    mean: '7.01', 
   },
   { 
-    date: '2023-06-03', 
-    region: 'Bern', 
-    concentration: '18.9 µg/m³', 
-    aqi: 63, 
-    status: 'Good',
-    statusClass: 'good'
+    year: '2015', 
+    minimum: '3.58', 
+    maximum: '23.50', 
+    mean: '9.72', 
   },
   { 
-    date: '2023-06-04', 
-    region: 'Basel', 
-    concentration: '31.5 µg/m³', 
-    aqi: 89, 
-    status: 'Unhealthy',
-    statusClass: 'unhealthy'
+    year: '2016', 
+    minimum: '2.94', 
+    maximum: '21.13', 
+    mean: '9.06', 
   },
   { 
-    date: '2023-06-05', 
-    region: 'Lausanne', 
-    concentration: '19.3 µg/m³', 
-    aqi: 65, 
-    status: 'Moderate',
-    statusClass: 'moderate'
+    year: '2017', 
+    minimum: '3.04', 
+    maximum: '20.86', 
+    mean: '8.71', 
+  },
+  { 
+    year: '2018', 
+    minimum: '1.77', 
+    maximum: '17.21', 
+    mean: '6.40', 
+  },
+  { 
+    year: '2019', 
+    minimum: '1.51', 
+    maximum: '18.89', 
+    mean: '5.93', 
+  },
+  { 
+    year: '2020', 
+    minimum: '1.27', 
+    maximum: '16.09', 
+    mean: '5.64', 
+  },
+  { 
+    year: '2021', 
+    minimum: '1.61', 
+    maximum: '16.77', 
+    mean: '6.00', 
+  },
+  { 
+    year: '2022', 
+    minimum: '1.59', 
+    maximum: '18.76', 
+    mean: '6.20', 
   }
 ]);
 </script>
