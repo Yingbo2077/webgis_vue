@@ -19,10 +19,8 @@
         <div class="filter-group">
           <label for="time-period">Time Period:</label>
           <select id="time-period" v-model="selectedTimePeriod">
-            <option value="day">Last 24 Hours</option>
-            <option value="week">Last Week</option>
-            <option value="month">Last Month</option>
-            <option value="year">Last Year</option>
+            <option value="month">Monthly</option>
+            <option value="year">Yearly</option>
           </select>
         </div>
       </div>
@@ -31,6 +29,26 @@
         <div class="chart-container">
           <h3>{{ selectedPollutantLabel }} Concentration Trend</h3>
           <div class="chart-placeholder">
+            
+            
+            import matplotlib.pyplot as plt
+
+            x = [1, 2, 3, 4, 5]
+            y = [2, 4, 1, 3, 5]
+
+            plt.plot(x, y, marker='o', linestyle='-', color='blue')
+            plt.xlabel("Time")
+            plt.ylabel("Value")
+            plt.title("Sensor Data")
+            plt.grid(True)
+            plt.xlim(0, 6)
+            plt.ylim(0, 6)
+            plt.show()
+  
+
+
+
+
             <!-- This will be replaced with an actual chart component in the future -->
             <div class="chart-mock">
               <div class="chart-line"></div>
