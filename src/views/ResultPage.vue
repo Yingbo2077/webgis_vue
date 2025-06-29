@@ -139,7 +139,7 @@ const statsData = ref([
 
 // Sample table data
 const dataNO2 = ref([
-  {year: '2013', minimum: '1.89', maximum: '19.39', mean: '7.04', statusClass: '2'},
+  {year: '2013', minimum: '1.89', maximum: '19.39', mean: '7.04', statusClass: 'Good'},
   {year: '2014', minimum: '1.92', maximum: '18.76', mean: '7.01', statusClass: '2'},
   {year: '2015', minimum: '3.58', maximum: '23.50', mean: '9.72', statusClass: '2'},
   {year: '2016', minimum: '2.94', maximum: '21.13', mean: '9.06', statusClass: '2'},
@@ -438,12 +438,12 @@ const tableData = computed(() => {
   font-weight: bold;
 }
 
-.status-badge.2 {
+.status-badge.good {
   background-color: #e8f5e9;
   color: #2e7d32;
 }
 
-.status-badge.3 {
+.status-badge.moderate {
   background-color: #fff8e1;
   color: #f57f17;
 }
