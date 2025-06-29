@@ -134,7 +134,7 @@ const statsData = ref([
 ]);
 
 // Sample table data
-<p v-if="{{ selectedPollutantLabel }} === 'NO₂'">
+<p v-if="selectedPollutantLabel === 'NO₂'">
 const tableData = ref([
   { 
     year: '2013', 
@@ -196,7 +196,7 @@ const tableData = ref([
     maximum: '18.76', 
     mean: '6.20', 
   }
-])
+]);
 </p>
 
 <p v-else-if="{{ selectedPollutantLabel }} === 'PM2.5'">
