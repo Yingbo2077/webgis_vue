@@ -169,9 +169,9 @@ const dataPM10 = ref([
   {year: '2022', minimum: '4.40', maximum: '20.88', mean: '10.52'}]);
   
 const tableData = computed(() => {
-  if (selectedPollutantLabel.value === 'NO₂') return dataNO2
-  if (selectedPollutantLabel.value === 'PM2.5') return dataPM25
-  if (selectedPollutantLabel.value === 'PM10') return dataPM10
+  if (selectedPollutant.value === 'no2') return dataNO2
+  if (selectedPollutant.value === 'pm25') return dataPM25
+  if (selectedPollutant.value === 'pm10') return dataPM10
   return []
 })
 
