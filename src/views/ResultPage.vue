@@ -40,7 +40,11 @@
                 <td>{{ item.minimum }}</td>
                 <td>{{ item.maximum }}</td>
                 <td>{{ item.mean }}</td>
-                <td>{{ item.state }}</td>
+                <td>
+                    <span class="status-badge" :class="item.statusClass"></span>
+                  {{ item.state }}
+                  </span>
+                </td>
               </tr>
             </tbody>
           </table>
