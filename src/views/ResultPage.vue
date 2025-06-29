@@ -132,7 +132,7 @@ const statsData = ref([
 ]);
 
 // Sample table data
-const dataNO2 = [
+const dataNO2 = ref([
   {year: '2013', minimum: '1.89', maximum: '19.39', mean: '7.04'},
   {year: '2014', minimum: '1.92', maximum: '18.76', mean: '7.01'},
   {year: '2015', minimum: '3.58', maximum: '23.50', mean: '9.72'},
@@ -142,7 +142,7 @@ const dataNO2 = [
   {year: '2019', minimum: '1.51', maximum: '18.89', mean: '5.93'},
   {year: '2020', minimum: '1.27', maximum: '16.09', mean: '5.64'},
   {year: '2021', minimum: '1.61', maximum: '16.77', mean: '6.00'},
-  {year: '2022', minimum: '1.59', maximum: '18.76', mean: '6.20'}];
+  {year: '2022', minimum: '1.59', maximum: '18.76', mean: '6.20'}]);
 
 const dataPM25 = ref([
   {year: '2013', minimum: '3.72', maximum: '17.51', mean: '8.87'},
