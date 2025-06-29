@@ -89,7 +89,7 @@ const pollutants = ref([
   { value: 'pm10', label: 'PM10' },
   { value: 'no2', label: 'NO₂' },
 ]);
-
+const selectedPollutant = ref('pm25');
 
 
 // Computed properties
