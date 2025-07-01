@@ -63,9 +63,9 @@
               </div>
             </div>
 
-            <!-- Section 2: Health-Based Classification -->
+            <!-- Section 2-->
             <div class="content-card">
-              <h2 class="text-3xl font-semibold mb-8">Data Acquisition and Processing</h2>
+              <h2 class="text-3xl font-semibold mb-8">Monthly Pollutant Raster Processing</h2>
               <div class="flex gap-12 mb-8 px-8 justify-start overflow-x-auto">
                 <div class="w-[400px] flex-none">
                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[350px]">
@@ -81,68 +81,121 @@
                 </div>
                 <div class="w-[400px] flex-none">
                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[350px]">
-                    <img src="@/assets/Rasterize.png" alt="Analysis Results" class="w-full h-full object-contain object-left-top"/>
+                    <img src="@/assets/Clipped.png" alt="Analysis Results" class="w-full h-full object-contain object-left-top"/>
                   </div>
-                  <p class="text-gray-500 text-sm mt-2 text-center">Final visualization of pollution analysis results</p>
+                  <p class="text-gray-500 text-sm mt-2 text-center">Clipped Monthly Pollution Raster</p>
                 </div>
               </div>
 
               <div class="text-content pl-8 pr-16">
                 <div class="flex flex-col gap-6">
                   <div>
-                    <h4 class="section-title">1. Data Processing</h4>
-                    <h4 class="subsection-title">Mesh Calculator Operations</h4>
+                    <h4 class="section-title">Monthly Aggregation from NetCDF</h4>
+
                     <p class="content-text mb-4">
-                      The QGIS Mesh Calculator was utilized to perform mathematical operations on the pollution data layers. This includes calculating monthly and annual averages, as well as deriving statistical measures for trend analysis.
+                      NO₂, PM2.5, and PM10 NetCDF files were loaded in QGIS using the "Add Mesh Layer" tool. After setting the CRS and enabling the time controller, available variables were verified. The Mesh Calculator was then used to compute the monthly mean for December 2022.
                     </p>
-                    <h4 class="subsection-title">Rasterization Process</h4>
                     <p class="content-text mb-4">
-                      Vector data layers were converted to raster format to enable pixel-based analysis and ensure consistency with the pollution data. This step was crucial for integrating different data types in the analysis workflow.
+                      The aggregated output was exported to GeoTIFF format using the "Rasterize Mesh Dataset" tool, with consistent resolution and projection. This raster served as a base input for further pollution analysis and visualization.
+
+                    </p>
+
+                  </div>
+                  <div>
+                    <h4 class="section-title">Monthly GeoTIFF Clipping and Standardization
+                    </h4>
+
+                    <p class="content-text mb-4">
+                      Monthly GeoTIFF layers (2013–2022) for NO₂, PM2.5, and PM10 were loaded and reprojected to a common CRS. The Switzerland boundary was used as a mask in the "Clip Raster by Mask Layer" tool, which was executed in batch mode to ensure spatial consistency and processing efficiency.
+
+                    </p>
+                    <p class="content-text mb-4">
+                      The clipped rasters were saved with a consistent naming convention and used as standardized input for annual mean calculation and time-series analysis.
                     </p>
                   </div>
 
-                  <div class="mb-4">
-                    <h4 class="section-title">2. Analysis Results</h4>
-                    <p class="content-text mb-4">
-                      The processed data revealed significant spatial patterns in pollution distribution across Switzerland. The analysis highlighted areas of high pollution concentration and temporal trends over the study period.
-                    </p>
-                    <p class="content-text">
-                      The results were visualized using standardized classification schemes to ensure consistency and comparability across different pollutants and time periods.
-                    </p>
-                  </div>
+
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Section 3: Change Analysis -->
-        <div>
-          <h2 class="text-3xl font-semibold mb-8">2022 Change Analysis</h2>
-          <div class="grid grid-cols-1 gap-12">
-            <div class="content-block">
-              <div class="image-container bg-gray-100 rounded-lg overflow-hidden mb-6 h-[400px]">
-                <!-- 实际使用时替换为真实图片 -->
-                <div class="w-full h-full bg-gray-200"></div>
+        <!-- Section 3-->
+        <div class="content-card mb-16">
+          <h2 class="text-3xl font-semibold mb-8">Yearly aggregated pollutants</h2>
+          <div class="flex gap-8 ">
+            <!-- Left side - Image -->
+            <div class="w-1/2 flex-none pl-8">
+              <div class="bg-gray-100 rounded-lg overflow-hidden h-[350px] mr-8">
+                <img src="@/assets/annual.png" alt="Annual Mean Analysis Results" class="w-full h-full object-cover"/>
               </div>
-              <div class="text-content">
-                <h3 class="text-2xl font-medium mb-4">Recent Trends Assessment</h3>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                  Comparison of 2022 pollution levels with the 2017-2021 average reveals:
-                </p>
-                <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6">
-                  <li>Areas of significant improvement or deterioration</li>
-                  <li>Effectiveness of air quality management measures</li>
-                  <li>Potential factors influencing observed changes</li>
-                </ul>
+              <p class="text-gray-500 text-sm mt-2 text-center">Annual Average Pollution Map Example: PM2.5 (2013)</p>
+            </div>
+            
+            <!-- Right side - Text content -->
+            <div class="w-1/2 flex-none pr-8 pb-8">
+              <div class="flex flex-col gap-6 h-full">
+                <div>
+                  <h4 class="section-title">1. Yearly Mean Calculation Using r.series</h4>
+                  <p class="content-text mb-4">
+                    Using the clipped monthly pollutant rasters, yearly means were calculated by averaging the 12 monthly layers for each pollutant and year. This was done using the r.series tool in QGIS, with the aggregation operation set to average and input layers grouped by year.
+                  </p>
+
+                </div>
+                <div>
+
+                  <h4 class="section-title mt-4">2. Batch Export and Standardized Output Naming</h4>
+                  <p class="content-text mb-4">
+                    Batch processing was applied to handle multiple years efficiently. The output files followed a standardized naming scheme such as Switzerland_average_pm2p5_2022.tif, with consistent projection and resolution settings.                  </p>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Section 4-->
+        <div class="content-card ">
+          <h2 class="text-3xl font-semibold mb-8"> Reclassification of Yearly Pollution Maps (2020)</h2>
+          <div class="flex gap-4 ">
+
+
+            <!-- left side - Text content -->
+            <div class="w-1/2 flex-none pl-8 pb-8 pr-8">
+              <div class="flex flex-col gap-6 h-full">
+                <div>
+                  <h4 class="section-title">1. Reclassification Based on EU Thresholds</h4>
+                  <p class="content-text mb-4">
+                    Based on EU air quality standards, annual mean concentration maps of NO₂, PM2.5, and PM10 for the year 2020 were reclassified into five categories. The Reclassify by Table tool in QGIS was used to apply the classification thresholds to the yearly raster layers.
+                  </p>
+
+                </div>
+                <div>
+
+                  <h4 class="section-title mt-4">2. Batch Processing and Output</h4>
+                  <p class="content-text mb-4">
+                    Each pollutant was assigned a specific set of threshold values and processed in batch mode. The resulting maps were saved using a standardized format, enabling visual assessment of concentration levels across the study area.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+            <!-- right side - Image -->
+            <div class="w-1/2 flex-none pl-8">
+              <div class="bg-gray-100 rounded-lg overflow-hidden h-[350px] mr-8">
+                <img src="@/assets/standard.png" alt="Annual Mean Analysis Results" class="w-full h-full object-cover"/>
+              </div>
+              <p class="text-gray-500 text-sm mt-2 text-center">PM2.5 Concentration Classification Map – 2020</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
     <AppFooter />
+
   </div>
 </template>
 
