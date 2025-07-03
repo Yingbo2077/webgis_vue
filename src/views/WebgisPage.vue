@@ -1,18 +1,8 @@
 <template>
   <div class="webgis-page">
-    <header class="navbar">
-      <nav>
-        <ul class="nav-links">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/developers">Developers</router-link></li>
-          <li><router-link to="/workflow">Workflow</router-link></li>
-          <li><router-link to="/results">Results</router-link></li>
-          <li><router-link to="/webgis">WebGIS</router-link></li>
-        </ul>
-      </nav>
-    </header>
+    <AppHeader />
     <div class="map-wrapper">
-  <MapContainer />
+      <MapContainer />
     </div>
     
     <AppFooter />
