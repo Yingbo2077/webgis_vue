@@ -1,245 +1,221 @@
 <template>
   <div class="workflow-page">
-    <header class="navbar">
-      <nav>
-        <ul class="nav-links">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/developers">Developers</router-link></li>
-          <li><router-link to="/workflow">Workflow</router-link></li>
-          <li><router-link to="/results">Results</router-link></li>
-          <li><router-link to="/webgis">WebGIS</router-link></li>
-        </ul>
-      </nav>
-    </header>
-
-    <main class="content-section">
-      <h1 class="page-title">Project Workflow</h1>
+    <AppHeader />
+    
+    <!-- Hero Section with Background -->
+    <div class="hero-section relative h-[600px]">
+      <div 
+        class="absolute inset-0 w-full h-full bg-cover bg-center"
+        :style="{
+          backgroundImage: `url(${workflow1Bg})`,
+          opacity: '0.7'
+        }"
+      ></div>
       
-      <div class="workflow-container">
-        <div class="workflow-timeline">
-          <div class="timeline-item" v-for="(step, index) in workflowSteps" :key="index">
-            <div class="timeline-marker" :class="{ 'active': step.completed }">
-              <span class="step-number">{{ index + 1 }}</span>
-            </div>
-            <div class="timeline-content">
-              <h3 class="step-title">{{ step.title }}</h3>
-              <p class="step-description">{{ step.description }}</p>
-              <div class="step-details" v-if="step.details">
-                <ul>
-                  <li v-for="(detail, i) in step.details" :key="i">{{ detail }}</li>
-                </ul>
+      <!-- Main Title -->
+      <div class="relative z-10 flex flex-col items-center justify-center h-full text-center">
+        <h1 class="text-7xl font-bold text-gray-800 mb-4">Workflow</h1>
+        <p class="text-2xl text-gray-700">Our Development Process</p>
+      </div>
+    </div>
+
+    <!-- Purpose Section -->
+    <div class="purpose-section py-12 h-[500px]" style="background-color: rgba(210,228,255,0.3);">
+      <div class="container mx-auto px-8 h-full">
+        <div class="flex flex-row items-start justify-between h-full">
+          <!-- Main Content -->
+          <div class="w-2/3 p-12 mr-8">
+            <h2 class="text-4xl font-bold mb-8">Project Purpose</h2>
+            <p class="text-lg text-gray-700 leading-relaxed">
+              This project investigates the spatial relationship between air pollution, land cover, and population exposure in Switzerland by integrating open geospatial data and reproducible GIS workflows. It focuses on:<br>
+             
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed mt-4">
+              1. Mapping pollution concentration trends (2013–2022) for NO₂, PM2.5, and PM10;<br>
+              2. Analyzing correlations between land cover types and pollution levels;<br>
+              3. Identifying exposure hotspots using pollution-population overlays.
+            </p>
+          </div>
+          
+          <!-- Quote -->
+          <div class="w-1/3 p-6 mb-12 pt-[230px]">
+            <p class="text-base text-gray-500 italic">
+              Final Deliverables:<br>
+              – Annual concentration maps (2013–2022)<br>
+              – Health-based pollution classification<br>
+              – Urban land-use correlation analysis<br>
+              – Bivariate exposure maps<br>
+              – Interactive WebGIS and website
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Steps Section -->
+    <div class="steps-section py-16 mb-8">
+      <div class="container mx-auto px-8">
+        <h2 class="text-4xl font-bold text-center mb-12">Development Steps</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <!-- Step 1: Data Collection -->
+          <div class="step-card" @click="navigateToStep('data-collection')">
+            <div :class="cardClasses">
+              <div :class="imageClasses" :style="{ backgroundImage: `url(${step1Bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }"></div>
+              <div :class="contentClasses">
+                <h3 class="text-2xl font-semibold mb-4">Air Pollutant Mapping and Classification</h3>
+                <p class="text-gray-600">
+                  CAMS air quality data (2013–2022) were processed into annual mean concentration maps for Switzerland. The 2020 maps were reclassified based on EU health thresholds, and 2022 changes were computed relative to the 2017–2021 average to assess national pollution trends.
+                </p>
               </div>
-              <div class="step-status" :class="{ 'completed': step.completed }">
-                {{ step.completed ? 'Completed' : 'In Progress' }}
+            </div>
+          </div>
+
+          <!-- Step 2: Analysis -->
+          <div class="step-card" @click="navigateToStep('analysis')">
+            <div :class="cardClasses">
+              <div :class="imageClasses" :style="{ backgroundImage: `url(${step2Bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }"></div>
+              <div :class="contentClasses">
+                <h3 class="text-2xl font-semibold mb-4">Land Cover Processing and Pollution Zonal Analysis</h3>
+                <p class="text-gray-600">
+                  ESA land cover was reclassified into six IPCC categories and aligned with Switzerland's pollution rasters. Zonal statistics focused on urban areas were used to analyze mean and maximum pollution from 2013 to 2022, resulting in temporal trend visualizations.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Implementation -->
+          <div class="step-card" @click="navigateToStep('implementation')">
+            <div :class="cardClasses">
+              <div :class="imageClasses" :style="{ backgroundImage: `url(${step3Bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }"></div>
+              <div :class="contentClasses">
+                <h3 class="text-2xl font-semibold mb-4">Population Exposure Analysis and Visualization</h3>
+                <p class="text-gray-600">
+                  Based on 2020 WorldPop data, Switzerland's population was classified by density and overlaid with pollution levels to create bivariate maps. Population totals under each pollution class were aggregated and visualized using pie charts to highlight exposure distribution.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
-    
+    </div>
+
     <AppFooter />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
+import workflow1Bg from '@/assets/workflow1.jpg';
+import step1Bg from '@/assets/workflow1.jpg';  // 暂时使用相同的图片，您可以替换为实际的图片
+import step2Bg from '@/assets/workflow2.jpg';
+import step3Bg from '@/assets/workflow.jpg';
 
-const workflowSteps = ref([
-  {
-    title: 'Data Collection',
-    description: 'Collecting air quality data from various regions in Switzerland, including PM2.5, PM10, NO2, O3, and other indicators.',
-    details: [
-      'Obtaining historical data from the Swiss Federal Office for the Environment',
-      'Setting up real-time data API interface',
-      'Integrating meteorological data'
-    ],
-    completed: true
-  },
-  {
-    title: 'Data Processing & Analysis',
-    description: 'Cleaning, standardizing and analyzing collected data to identify pollution patterns and trends.',
-    details: [
-      'Data cleaning and outlier handling',
-      'Application of spatiotemporal interpolation methods',
-      'Statistical analysis and trend identification'
-    ],
-    completed: true
-  },
-  {
-    title: 'GIS Data Integration',
-    description: 'Integrating processed data with geographic information systems, preparing for spatial visualization.',
-    details: [
-      'Coordinate system conversion and standardization',
-      'Spatial database construction',
-      'GeoJSON data generation'
-    ],
-    completed: true
-  },
-  {
-    title: 'WebGIS Development',
-    description: 'Developing interactive WebGIS application based on OpenLayers and Vue.js to visualize and query air quality data.',
-    details: [
-      'Map interface design and implementation',
-      'Interactive feature development',
-      'Data layer management'
-    ],
-    completed: false
-  },
-  {
-    title: 'Model Building & Prediction',
-    description: 'Building air quality prediction models based on historical data to provide future air quality trend forecasts.',
-    details: [
-      'Machine learning model selection and training',
-      'Model validation and optimization',
-      'Prediction result visualization'
-    ],
-    completed: false
+// Card Styles
+const cardClasses = [
+  'bg-white',
+  'rounded-lg',
+  'shadow-lg',
+  'hover:shadow-xl',
+  'transition-shadow',
+  'h-[620px]',
+  'flex',
+  'flex-col',
+  'overflow-hidden' // 防止内容溢出
+].join(' ');
+
+const imageClasses = [
+  'h-[350px]', // 固定图片高度
+  'rounded-t-lg',
+  'transition-transform',
+  'duration-300',
+  'transform',
+  'hover:scale-105' // 添加图片悬停效果
+].join(' ');
+
+const contentClasses = [
+  'p-8',
+  'flex',
+  'flex-col',
+  'h-[270px]', // 固定内容区域高度
+  'overflow-y-auto', // 自动滚动
+  'custom-scrollbar' // 使用自定义滚动条样式
+].join(' ');
+
+// eslint-disable-next-line no-unused-vars
+const router = useRouter();
+
+const navigateToStep = (step) => {
+  switch(step) {
+    case 'data-collection':
+      router.push('/workflow/air-pollutant');
+      break;
+    case 'analysis':
+      router.push('/workflow/land-cover');
+      break;
+    case 'implementation':
+      router.push('/workflow/population');
+      break;
   }
-]);
+};
 </script>
 
 <style scoped>
 .workflow-page {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
   min-height: 100vh;
-  background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
 }
 
-.navbar {
-  background: linear-gradient(to right, #ff9a9e, #3a4db5);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
+.step-card {
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
+.step-card:hover {
+  transform: translateY(-5px);
 }
 
-.nav-links li {
-  display: inline;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
-.content-section {
-  padding: 4rem;
-  flex: 1;
-}
-
-.page-title {
-  text-align: center;
-  margin-bottom: 3rem;
-  color: #333;
-}
-
-.workflow-container {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.workflow-timeline {
+.hero-section {
   position: relative;
-  padding: 2rem 0;
+  background-color: #f3f4f6;
 }
 
-.workflow-timeline::before {
+.hero-section::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 50px;
-  height: 100%;
-  width: 4px;
-  background: #ddd;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, #ffffff);
 }
 
-.timeline-item {
-  position: relative;
-  margin-bottom: 3rem;
-  padding-left: 100px;
+/* 自定义滚动条样式 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
 }
 
-.timeline-marker {
-  position: absolute;
-  left: 42px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ddd;
-  border: 4px solid #f9f9f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.timeline-marker.active {
-  background: #3a4db5;
-}
-
-.step-number {
-  color: white;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.timeline-content {
-  background: white;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f3f3f3;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
 }
 
-.step-title {
-  margin-top: 0;
-  color: #333;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
 }
 
-.step-description {
-  color: #555;
-  margin-bottom: 1rem;
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 
-.step-details ul {
-  padding-left: 1.5rem;
-  color: #666;
-}
-
-.step-details li {
-  margin-bottom: 0.5rem;
-}
-
-.step-status {
-  display: inline-block;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  background: #f0f0f0;
-  color: #888;
-  font-size: 0.8rem;
-  margin-top: 1rem;
-}
-
-.step-status.completed {
-  background: #d4edda;
-  color: #155724;
+/* Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f3f3f3;
 }
 </style>

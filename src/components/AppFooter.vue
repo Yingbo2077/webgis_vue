@@ -1,234 +1,62 @@
 <template>
-  <footer class="app-footer">
-    <div class="footer-container">
-      <div class="footer-section about">
-        <h3>About WebGIS</h3>
-        <p>A comprehensive platform for monitoring and analyzing air quality in Switzerland using advanced geospatial technologies.</p>
-        <div class="social-links">
-          <a href="#" class="social-link" title="Facebook"><i class="social-icon facebook"></i></a>
-          <a href="#" class="social-link" title="Twitter"><i class="social-icon twitter"></i></a>
-          <a href="#" class="social-link" title="LinkedIn"><i class="social-icon linkedin"></i></a>
-          <a href="#" class="social-link" title="GitHub"><i class="social-icon github"></i></a>
+<footer class="text-gray-800 bg-[linear-gradient(to_right,_#ff9a9e,_#3a4db5)]">    
+  <!-- Main Footer Content -->
+    <div class="container mx-auto p-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- About Section -->
+        <div>
+          <h6 class="uppercase font-bold mb-4 border-b border-black border-opacity-30 pb-2">About</h6>
+          <p class="text-sm">
+            An interactive platform to analyze air quality trends, land use and population exposure in Europe using open data and WebGIS.
+          </p>
+           <p class="mt-2 text-sm">Use case: Switzerland</p>
+        </div>
+
+        <!-- Data Sources Section -->
+        <div>
+          <h6 class="uppercase font-bold mb-4 border-b border-black border-opacity-30 pb-2">Data Sources</h6>
+          <ul class="text-sm">
+            <li class="mb-2"><a href="#!" class="hover:underline">CAMS Reanalysis 2013-2022</a></li>
+            <li class="mb-2"><a href="#!" class="hover:underline">ESA CCI Land Cover 2022</a></li>
+            <li class="mb-2"><a href="#!" class="hover:underline">WorldPop Population 2020</a></li>
+            <li><a href="#!" class="hover:underline">WHO AQ Guidelines</a></li>
+          </ul>
+        </div>
+
+        <!-- Tools Used Section -->
+        <div>
+          <h6 class="uppercase font-bold mb-4 border-b border-black border-opacity-30 pb-2">Tools Used</h6>
+          <ul class="text-sm">
+            <li class="mb-2"><a href="#!" class="hover:underline">QGIS, GRASS, SAGA</a></li>
+            <li class="mb-2"><a href="#!" class="hover:underline">GeoServer, OpenLayers</a></li>
+            <li><a href="#!" class="hover:underline">Vue.js, Tailwind CSS</a></li>
+          </ul>
+        </div>
+
+        <!-- Team Section -->
+        <div>
+          <h6 class="uppercase font-bold mb-4 border-b border-black border-opacity-30 pb-2">Team</h6>
+          <p class="text-sm mb-4">
+            Meet the team behind this project and explore each member's role.
+          </p>
+          <router-link to="/developers" class="inline-block px-4 py-2 text-sm font-semibold text-gray-800 bg-white bg-opacity-40 rounded-lg shadow-md hover:bg-opacity-60 transition-colors">
+            🔗 Meet Our Team
+          </router-link>
         </div>
       </div>
-      
-      <div class="footer-section resources">
-        <h3>Resources</h3>
-        <ul>
-          <li><a href="https://www.bafu.admin.ch/air" target="_blank">Swiss Air Quality Data</a></li>
-          <li><a href="https://openlayers.org/" target="_blank">OpenLayers</a></li>
-          <li><a href="https://vuejs.org/" target="_blank">Vue.js</a></li>
-          <li><a href="https://www.who.int/health-topics/air-pollution" target="_blank">WHO Air Quality Guidelines</a></li>
-        </ul>
-      </div>
-      
-      <div class="footer-section contact-section">
-        <router-link to="/developers" class="contact-button">
-          <div class="question-mark">?</div>
-          <span class="contact-text">Contact Our Team</span>
-        </router-link>
-      </div>
     </div>
-    
-    <div class="footer-bottom">
-      <p>&copy; {{ currentYear }} Air Quality WebGIS Project. All rights reserved.</p>
-      <p>Powered by OpenLayers and Vue.js</p>
+
+    <!-- Copyright -->
+    <div class="text-center p-4 bg-black bg-opacity-10 text-xs">
+      © 2025 Air Quality WebGIS Project — For educational use only. Built by students of GIS Lab @PoliMI
     </div>
   </footer>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-
-const currentYear = computed(() => new Date().getFullYear());
+// No script needed for this static component
 </script>
 
 <style scoped>
-.app-footer {
-  background: linear-gradient(to right, #2c3e50, #1a2a38);
-  color: #f8f9fa;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  width: 100%;
-}
-
-.footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1rem;
-}
-
-.footer-section {
-  flex: 1;
-  min-width: 250px;
-  margin-bottom: 2rem;
-  padding: 0 1rem;
-}
-
-.footer-section h3 {
-  color: #ff9a9e;
-  margin-bottom: 1.5rem;
-  font-size: 1.2rem;
-  position: relative;
-  padding-bottom: 0.8rem;
-}
-
-.footer-section h3::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 50px;
-  height: 2px;
-  background: linear-gradient(to right, #ff9a9e, #3a4db5);
-}
-
-.about p {
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-.social-links {
-  display: flex;
-  gap: 1rem;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.social-link:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-3px);
-}
-
-.social-icon {
-  width: 18px;
-  height: 18px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.social-icon.facebook {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z'/%3E%3C/svg%3E");
-}
-
-.social-icon.twitter {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M22.46 6C21.69 6.35 20.86 6.58 20 6.69C20.88 6.16 21.56 5.32 21.88 4.31C21.05 4.81 20.13 5.16 19.16 5.36C18.37 4.5 17.26 4 16 4C13.65 4 11.73 5.92 11.73 8.29C11.73 8.63 11.77 8.96 11.84 9.27C8.28 9.09 5.11 7.38 3 4.79C2.63 5.42 2.42 6.16 2.42 6.94C2.42 8.43 3.17 9.75 4.33 10.5C3.62 10.5 2.96 10.3 2.38 10C2.38 10 2.38 10 2.38 10.03C2.38 12.11 3.86 13.85 5.82 14.24C5.46 14.34 5.08 14.39 4.69 14.39C4.42 14.39 4.15 14.36 3.89 14.31C4.43 16 6 17.26 7.89 17.29C6.43 18.45 4.58 19.13 2.56 19.13C2.22 19.13 1.88 19.11 1.54 19.07C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79C20.33 8.6 20.33 8.42 20.32 8.23C21.16 7.63 21.88 6.87 22.46 6Z'/%3E%3C/svg%3E");
-}
-
-.social-icon.linkedin {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z'/%3E%3C/svg%3E");
-}
-
-.social-icon.github {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 2A10 10 0 0 0 2 12C2 16.42 4.87 20.17 8.84 21.5C9.34 21.58 9.5 21.27 9.5 21C9.5 20.77 9.5 20.14 9.5 19.31C6.73 19.91 6.14 17.97 6.14 17.97C5.68 16.81 5.03 16.5 5.03 16.5C4.12 15.88 5.1 15.9 5.1 15.9C6.1 15.97 6.63 16.93 6.63 16.93C7.5 18.45 8.97 18 9.54 17.76C9.63 17.11 9.89 16.67 10.17 16.42C7.95 16.17 5.62 15.31 5.62 11.5C5.62 10.39 6 9.5 6.65 8.79C6.55 8.54 6.2 7.5 6.75 6.15C6.75 6.15 7.59 5.88 9.5 7.17C10.29 6.95 11.15 6.84 12 6.84C12.85 6.84 13.71 6.95 14.5 7.17C16.41 5.88 17.25 6.15 17.25 6.15C17.8 7.5 17.45 8.54 17.35 8.79C18 9.5 18.38 10.39 18.38 11.5C18.38 15.32 16.04 16.16 13.81 16.41C14.17 16.72 14.5 17.33 14.5 18.26C14.5 19.6 14.5 20.68 14.5 21C14.5 21.27 14.66 21.59 15.17 21.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z'/%3E%3C/svg%3E");
-}
-
-.resources ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.resources li {
-  margin-bottom: 0.8rem;
-}
-
-.resources a {
-  color: #f8f9fa;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-.resources a:hover {
-  color: #ff9a9e;
-  transform: translateX(5px);
-}
-
-.contact-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.contact-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.question-mark {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff9a9e, #3a4db5);
-  color: white;
-  font-size: 2rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.contact-text {
-  color: #f8f9fa;
-  font-size: 0.9rem;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-}
-
-.contact-button:hover .question-mark {
-  transform: scale(1.2) rotate(10deg);
-  box-shadow: 0 6px 20px rgba(255, 154, 158, 0.4);
-}
-
-.contact-button:hover .contact-text {
-  color: #ff9a9e;
-  opacity: 1;
-}
-
-.footer-bottom {
-  background-color: rgba(0, 0, 0, 0.2);
-  text-align: center;
-  padding: 1.5rem 1rem;
-  font-size: 0.9rem;
-}
-
-.footer-bottom p {
-  margin: 0.3rem 0;
-}
-
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-  }
-  
-  .footer-section {
-    margin-bottom: 2rem;
-  }
-  
-  .contact-section {
-    order: -1;
-    margin-bottom: 2rem;
-  }
-}
+/* All styling is now done via Tailwind CSS classes in the template */
 </style> 

@@ -1,6 +1,6 @@
 <template>
   <div class="webgis-page">
-  <header class="navbar">
+    <header class="navbar">
       <nav>
         <ul class="nav-links">
           <li><router-link to="/">Home</router-link></li>
@@ -29,36 +29,6 @@
   flex-direction: column;
 }
 
-.navbar {
-  background: linear-gradient(to right, #ff9a9e, #3a4db5);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center;
-  z-index: 2;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  display: inline;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
 .map-wrapper {
   flex: 1;
   position: relative;
@@ -68,6 +38,7 @@
 </style>
 
 <script setup>
+import AppHeader from '@/components/AppHeader.vue';
 import MapContainer from '@/components/MapContainer.vue'
 import AppFooter from '@/components/AppFooter.vue';
 </script>
