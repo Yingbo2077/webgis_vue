@@ -1,6 +1,6 @@
 <template>
   <div class="webgis-page">
-    <header class="navbar">
+  <header class="navbar">
       <nav>
         <ul class="nav-links">
           <li><router-link to="/">Home</router-link></li>
@@ -12,7 +12,7 @@
       </nav>
     </header>
     <div class="map-wrapper">
-      <MapContainer />
+  <MapContainer />
     </div>
     
     <AppFooter />
