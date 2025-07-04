@@ -4,15 +4,7 @@
 
     <main class="content-section">
       <h1 class="page-title">Air Quality Analysis Results</h1>
-      
       <div class="filter-section">
-        <div class="filter-group">
-          <label for="region-select">Region:</label>
-          <select id="region-select" v-model="selectedRegion">
-            <option value="all">All Regions</option>
-            <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
-          </select>
-        </div>
         
         <div class="filter-group">
           <label for="pollutant-select">Pollutant:</label>
@@ -22,31 +14,69 @@
             </option>
           </select>
         </div>
-        
-        <div class="filter-group">
-          <label for="time-period">Time Period:</label>
-          <select id="time-period" v-model="selectedTimePeriod">
-            <option value="day">Last 24 Hours</option>
-            <option value="week">Last Week</option>
-            <option value="month">Last Month</option>
-            <option value="year">Last Year</option>
-          </select>
-        </div>
       </div>
       
       <div class="results-container">
+
+        <div class="table-container">
+          <h3>{{ selectedPollutantLabel }} Annual Concentration</h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+                <th>Mean</th>
+                <th>State</th>
+              </tr>
+            </thead>
+            <tbody>
+              <p v-if="selectedPollutantLabel === 'NO₂'"></p>
+              <p v-else-if="selectedPollutantLabel === 'PM2.5'"></p>
+              <p v-else-if="selectedPollutantLabel === 'PM10'"></p>
+              <tr v-for="(item, index) in tableData" :key="index">
+                <td>{{ item.year }}</td>
+                <td>{{ item.minimum }}</td>
+                <td>{{ item.maximum }}</td>
+                <td>{{ item.mean }}</td>
+                <td>
+                    <span class="status-badge" :class="item.statusClass">
+                  {{ item.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="table-container">
+          <h3>Reclassification schema according to ESA CCI Land Cover classifications system.</h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>IPCC Classes</th>
+                <th>LCC Legend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, index) in tableDataClass" :key="index">
+                <td>{{ item.Class }}</td>
+                <td>{{ item.IPCC }}</td>
+                <td>{{ item.Legend }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+
+
         <div class="chart-container">
-          <h3>{{ selectedPollutantLabel }} Concentration Trend ({{ selectedRegionLabel }})</h3>
-          <div class="chart-placeholder">
-            <!-- This will be replaced with an actual chart component in the future -->
-            <div class="chart-mock">
-              <div class="chart-line"></div>
-              <div class="chart-labels">
-                <span>Time</span>
-                <span>Concentration</span>
-              </div>
-            </div>
-          </div>
+          <h3>Maximum and mean concentration value per year and contaminant:</h3>
+            <img :src="Step6Max" alt="Step6Max" class="image-row"/>
+            <img :src="Step6Mean" alt="Step6Mean" class="image-row"/>
         </div>
         
         <div class="stats-container">
@@ -62,65 +92,32 @@
             </div>
           </div>
         </div>
-        
-        <div class="table-container">
-          <h3>Detailed Data</h3>
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Region</th>
-                <th>{{ selectedPollutantLabel }} Concentration</th>
-                <th>Air Quality Index</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in tableData" :key="index">
-                <td>{{ item.date }}</td>
-                <td>{{ item.region }}</td>
-                <td>{{ item.concentration }}</td>
-                <td>{{ item.aqi }}</td>
-                <td>
-                  <span class="status-badge" :class="item.statusClass">
-                    {{ item.status }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
     </main>
     
     <AppFooter />
   </div>
+
+
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
+import Step6Max from '@/assets/Step6_max.svg';
+import Step6Mean from '@/assets/Step6_mean.svg';
 
 // Sample data
-const regions = ref(['Zurich', 'Geneva', 'Bern', 'Basel', 'Lausanne']);
-const selectedRegion = ref('all');
-
 const pollutants = ref([
   { value: 'pm25', label: 'PM2.5' },
   { value: 'pm10', label: 'PM10' },
   { value: 'no2', label: 'NO₂' },
-  { value: 'o3', label: 'O₃' },
-  { value: 'so2', label: 'SO₂' }
 ]);
 const selectedPollutant = ref('pm25');
 
-const selectedTimePeriod = ref('week');
 
 // Computed properties
-const selectedRegionLabel = computed(() => {
-  return selectedRegion.value === 'all' ? 'All Regions' : selectedRegion.value;
-});
 
 const selectedPollutantLabel = computed(() => {
   const found = pollutants.value.find(p => p.value === selectedPollutant.value);
@@ -160,49 +157,66 @@ const statsData = ref([
 ]);
 
 // Sample table data
-const tableData = ref([
-  { 
-    date: '2023-06-01', 
-    region: 'Zurich', 
-    concentration: '15.2 µg/m³', 
-    aqi: 58, 
-    status: 'Good',
-    statusClass: 'good'
-  },
-  { 
-    date: '2023-06-02', 
-    region: 'Geneva', 
-    concentration: '22.7 µg/m³', 
-    aqi: 75, 
-    status: 'Moderate',
-    statusClass: 'moderate'
-  },
-  { 
-    date: '2023-06-03', 
-    region: 'Bern', 
-    concentration: '18.9 µg/m³', 
-    aqi: 63, 
-    status: 'Good',
-    statusClass: 'good'
-  },
-  { 
-    date: '2023-06-04', 
-    region: 'Basel', 
-    concentration: '31.5 µg/m³', 
-    aqi: 89, 
-    status: 'Unhealthy',
-    statusClass: 'unhealthy'
-  },
-  { 
-    date: '2023-06-05', 
-    region: 'Lausanne', 
-    concentration: '19.3 µg/m³', 
-    aqi: 65, 
-    status: 'Moderate',
-    statusClass: 'moderate'
-  }
-]);
+const dataNO2 = ref([
+  {year: '2013', minimum: '1.89', maximum: '19.39', mean: '7.04', statusClass: 'good', status:'2'},
+  {year: '2014', minimum: '1.92', maximum: '18.76', mean: '7.01', statusClass: 'good', status:'2'},
+  {year: '2015', minimum: '3.58', maximum: '23.50', mean: '9.72', statusClass: 'good', status:'2'},
+  {year: '2016', minimum: '2.94', maximum: '21.13', mean: '9.06', statusClass: 'good', status:'2'},
+  {year: '2017', minimum: '3.04', maximum: '20.86', mean: '8.71', statusClass: 'good', status:'2'},
+  {year: '2018', minimum: '1.77', maximum: '17.21', mean: '6.40', statusClass: 'good', status:'2'},
+  {year: '2019', minimum: '1.51', maximum: '18.89', mean: '5.93', statusClass: 'good', status:'2'},
+  {year: '2020', minimum: '1.27', maximum: '16.09', mean: '5.64', statusClass: 'good', status:'2'},
+  {year: '2021', minimum: '1.61', maximum: '16.77', mean: '6.00', statusClass: 'good', status:'2'},
+  {year: '2022', minimum: '1.59', maximum: '18.76', mean: '6.20', statusClass: 'good', status:'2'}]);
+
+const dataPM25 = ref([
+  {year: '2013', minimum: '3.72', maximum: '17.51', mean: '8.87', statusClass: 'moderate', status: '3'},
+  {year: '2014', minimum: '3.62', maximum: '12.52', mean: '7.15', statusClass: 'moderate', status: '3'},
+  {year: '2015', minimum: '5.72', maximum: '16.99', mean: '10.29', statusClass: 'moderate', status: '3'},
+  {year: '2016', minimum: '4.79', maximum: '16.88', mean: '9.61', statusClass: 'moderate', status: '3'},
+  {year: '2017', minimum: '4.96', maximum: '14.64', mean: '8.24', statusClass: 'moderate', status: '3'},
+  {year: '2018', minimum: '3.55', maximum: '12.33', mean: '7.50', statusClass: 'moderate', status: '3'},
+  {year: '2019', minimum: '3.70', maximum: '15.82', mean: '6.81', statusClass: 'moderate', status: '3'},
+  {year: '2020', minimum: '3.54', maximum: '17.46', mean: '6.48', statusClass: 'moderate', status: '3'},
+  {year: '2021', minimum: '4.26', maximum: '18.14', mean: '6.85', statusClass: 'moderate', status: '3'},
+  {year: '2022', minimum: '3.40', maximum: '15.90', mean: '7.32', statusClass: 'moderate', status: '3'}]);
+
+const dataPM10 = ref([
+  {year: '2013', minimum: '8.38', maximum: '20.83', mean: '13.67', statusClass: 'good', status: '2'},
+  {year: '2014', minimum: '6.05', maximum: '16.31', mean: '10.44', statusClass: 'good', status: '2'},
+  {year: '2015', minimum: '7.51', maximum: '20.41', mean: '13.02', statusClass: 'good', status: '2'},
+  {year: '2016', minimum: '6.52', maximum: '19.82', mean: '12.00', statusClass: 'good', status: '2'},
+  {year: '2017', minimum: '6.40', maximum: '17.86', mean: '10.73',statusClass: 'good', status: '2'},
+  {year: '2018', minimum: '4.91', maximum: '16.15', mean: '9.87', statusClass: 'good', status: '2'},
+  {year: '2019', minimum: '5.11', maximum: '18.90', mean: '9.49', statusClass: 'good', status: '2'},
+  {year: '2020', minimum: '4.87', maximum: '20.27', mean: '8.63', statusClass: 'good', status: '2'},
+  {year: '2021', minimum: '6.32', maximum: '23.36', mean: '9.97', statusClass: 'good', status: '2'},
+  {year: '2022', minimum: '4.40', maximum: '20.88', mean: '10.52', statusClass: 'good', status: '2'}]);
+
+  
+const tableData = computed(() => {
+  if (selectedPollutant.value === 'no2') return dataNO2.value
+  if (selectedPollutant.value === 'pm25') return dataPM25.value
+  if (selectedPollutant.value === 'pm10') return dataPM10.value
+  return []});
+
+const tableDataClass = ref([
+  {Class: '1', IPCC: '1 - Agriculture', Legend: '10, 11, 12, 20, 30, 40'},
+  {Class: '2', IPCC: '2 - Forest', Legend: '50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90, 100'},
+  {Class: '3', IPCC: '3 - Grassland', Legend: '110'},
+  {Class: '4', IPCC: '6 - Shrubland', Legend: '120, 121, 122'},
+  {Class: '5', IPCC: '3 - Grassland', Legend: '130'},
+  {Class: '6', IPCC: '6 - Sparse vegetation', Legend: '140, 150, 151, 152, 153'},
+  {Class: '7', IPCC: '2 - Forest', Legend: '160, 170'},
+  {Class: '8', IPCC: '4 - Wetland', Legend: '180'},
+  {Class: '9', IPCC: '5 - Settlement', Legend: '190'},
+  {Class: '10', IPCC: '6 - Base area', Legend: '200, 201, 202, 210, 220'}]);
+
+
 </script>
+
+
+
 
 <style scoped>
 .result-page {
@@ -459,13 +473,13 @@ const tableData = ref([
 }
 
 .status-badge.good {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: #A9C6EE;
+  color: #5B94DF;
 }
 
 .status-badge.moderate {
-  background-color: #fff8e1;
-  color: #f57f17;
+  background-color: #F4C990;
+  color: #EB9D35;
 }
 
 .status-badge.unhealthy {
@@ -482,5 +496,16 @@ const tableData = ref([
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+.image-row {
+  max-width: 600px;
+  margin: 1rem;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem; /* espacio entre imágenes */
+  flex-wrap: wrap; /* por si en pantallas pequeñas se apilan */
+  margin-bottom: 2rem;
 }
 </style>
