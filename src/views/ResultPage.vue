@@ -99,6 +99,7 @@ import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 import Step6Max from '@/assets/Step6_max.svg';
 import Step6Mean from '@/assets/Step6_mean.svg';
+import bivariate from '@/assets/bivariate.png';
 
 // Sample data
 const pollutants = ref([
