@@ -3,7 +3,10 @@
     <AppHeader />
 
     <main class="content-section">
-      <h1 class="page-title">Air Quality Analysis Results</h1>
+      <h1 class="text-7xl font-bold text-center mb-2">Results</h1>
+      <h2 class="text-2xl text-center text-gray-700 mb-4">Air Quality Analysis</h2>
+      <h3></h3>
+
       <div class="filter-section">
         
         <div class="filter-group">
@@ -19,7 +22,7 @@
       <div class="results-container">
 
         <div class="table-container">
-          <h3>{{ selectedPollutantLabel }} Annual Concentration</h3>
+          <h1 class="text-1xl font-bold mb-2">{{ selectedPollutantLabel }} Annual Concentration</h1>
           <table class="data-table">
             <thead>
               <tr>
@@ -51,7 +54,8 @@
 
 
         <div class="table-container">
-          <h3>Reclassification schema according to ESA CCI Land Cover classifications system.</h3>
+          <h1 class="text-1xl font-bold mb-2">ESA CCI Land Cover</h1>
+          <h3>Reclassification schema according to ESA CCI Land Cover classification system</h3>
           <table class="data-table">
             <thead>
               <tr>
@@ -74,22 +78,41 @@
 
 
         <div class="chart-container">
-          <h3>Maximum and mean concentration value per year and contaminant:</h3>
+          <h1 class="text-1xl font-bold mb-2">Maximum and mean concentration</h1>
+          <h3>Comparison of maximum and mean concentration value per year and contaminant</h3>
             <img :src="Step6Max" alt="Step6Max" class="image-row"/>
             <img :src="Step6Mean" alt="Step6Mean" class="image-row"/>
         </div>
         
          <div class="chart-container">
-          <h3>Bivariate map legend:</h3>
+          <h1 class="text-1xl font-bold mb-2">Bivariate map and legend</h1>
+          <h3>Bivariate map considering contaminant {{ selectedPollutantLabel }}</h3>
+            <p v-if="selectedPollutantLabel === 'NO₂'">
+              <img :src="bivariate_NO2" alt="bivariate_NO2" class="image-rowrow"/>
+            </p>
+            <p v-else-if="selectedPollutantLabel === 'PM2.5'">
+              <img :src="bivariate_PM2P5" alt="bivariate_PM2P5" class="image-rowrow"/>
+            </p>
+            <p v-else-if="selectedPollutantLabel === 'PM10'">
+              <img :src="bivariate_PM10" alt="bivariate_PM10" class="image-rowrow"/>
+            </p>
+          <h3>Bivariate legend</h3>
             <img :src="bivariate" alt="bivariate" class="image-row"/>
         </div>
         
        <div class="chart-container">
-          <h3>Percentage of population exposed to different categories of air pollutant concentrations (NO₂ at the left, PM2.5 at the center and PM10 at the right):</h3>
-            <img :src="piechart_NO2" alt="piechart_NO2" class="image-row"/>
-            <img :src="piechart_PM2P5" alt="piechart_PM2P5" class="image-row"/>
-            <img :src="piechart_PM10" alt="piechart_PM10" class="image-row"/>
-       </div>
+          <h1 class="text-1xl font-bold mb-2">Pie chart</h1>
+          <h3>Percentage of population exposed to different categories of air pollutant ({{ selectedPollutantLabel }}) concentrations</h3>
+            <p v-if="selectedPollutantLabel === 'NO₂'"> 
+              <img :src="piechart_NO2" alt="piechart_NO2" class="image-row"/>
+            </p>
+            <p v-else-if="selectedPollutantLabel === 'PM2.5'">
+              <img :src="piechart_PM2P5" alt="piechart_PM2P5" class="image-row"/>
+            </p>
+            <p v-else-if="selectedPollutantLabel === 'PM10'">
+              <img :src="piechart_PM10" alt="piechart_PM10" class="image-row"/>
+            </p>
+        </div>
 
         
       </div>
@@ -111,6 +134,9 @@ import bivariate from '@/assets/bivariate.png';
 import piechart_NO2 from '@/assets/piechart_NO2.png';
 import piechart_PM10 from '@/assets/piechart_PM10.png';
 import piechart_PM2P5 from '@/assets/piechart_PM2P5.png';
+import bivariate_NO2 from '@/assets/bivariate_NO2.png';
+import bivariate_PM10 from '@/assets/bivariate_PM10.png';
+import bivariate_PM2P5 from '@/assets/bivariate_PM2P5.png';
 
 // Sample data
 const pollutants = ref([
@@ -422,7 +448,7 @@ const tableDataClass = ref([
 
 .data-table th,
 .data-table td {
-  padding: 0.8rem;
+  padding: 0.4rem;
   text-align: left;
   border-bottom: 1px solid #eee;
 }
@@ -472,7 +498,18 @@ const tableDataClass = ref([
 }
 
 .image-row {
-  max-width: 600px;
+  max-width: 400px;
+  margin: 1rem;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem; /* espacio entre imágenes */
+  flex-wrap: wrap; /* por si en pantallas pequeñas se apilan */
+  margin-bottom: 2rem;
+}
+
+.image-rowrow {
+  max-width: 700px;
   margin: 1rem;
   display: inline-block;
   justify-content: center;
