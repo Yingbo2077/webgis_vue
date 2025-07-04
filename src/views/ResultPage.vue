@@ -79,19 +79,11 @@
             <img :src="Step6Mean" alt="Step6Mean" class="image-row"/>
         </div>
         
-        <div class="stats-container">
-          <div class="stat-card" v-for="(stat, index) in statsData" :key="index">
-            <div class="stat-icon" :class="stat.type"></div>
-            <div class="stat-content">
-              <h4 class="stat-title">{{ stat.title }}</h4>
-              <p class="stat-value">{{ stat.value }}</p>
-              <p class="stat-change" :class="stat.trend">
-                {{ stat.change }}
-                <span class="trend-arrow"></span>
-              </p>
-            </div>
-          </div>
+         <div class="chart-container">
+          <h3>Bivariate map legend:</h3>
+            <img :src="bivariate" alt="bivariate" class="image-row"/>
         </div>
+        
       </div>
     </main>
     
@@ -107,6 +99,7 @@ import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 import Step6Max from '@/assets/Step6_max.svg';
 import Step6Mean from '@/assets/Step6_mean.svg';
+import bivariate from '@/assets/bivariate.png';
 
 // Sample data
 const pollutants = ref([
@@ -124,37 +117,6 @@ const selectedPollutantLabel = computed(() => {
   return found ? found.label : '';
 });
 
-// Sample statistics data
-const statsData = ref([
-  {
-    title: 'Average Concentration',
-    value: '18.3 µg/m³',
-    change: '5.2% decrease from last week',
-    trend: 'positive',
-    type: 'average'
-  },
-  {
-    title: 'Maximum Concentration',
-    value: '42.7 µg/m³',
-    change: '2.1% increase from last week',
-    trend: 'negative',
-    type: 'maximum'
-  },
-  {
-    title: 'Exceedance Days',
-    value: '3 days',
-    change: '2 days less than last month',
-    trend: 'positive',
-    type: 'days'
-  },
-  {
-    title: 'Air Quality Index',
-    value: '65',
-    change: 'Moderate',
-    trend: 'neutral',
-    type: 'aqi'
-  }
-]);
 
 // Sample table data
 const dataNO2 = ref([
