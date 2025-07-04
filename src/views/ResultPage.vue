@@ -84,6 +84,14 @@
             <img :src="bivariate" alt="bivariate" class="image-row"/>
         </div>
         
+       <div class="chart-container">
+          <h3>Percentage of population exposed to different categories of air pollutant concentrations (NO₂ at the left, PM2.5 at the center and PM10 at the right):</h3>
+            <img :src="piechart_NO2" alt="piechart_NO2" class="image-row"/>
+            <img :src="piechart_PM2P5" alt="piechart_PM2P5" class="image-row"/>
+            <img :src="piechart_PM10" alt="piechart_PM10" class="image-row"/>
+       </div>
+
+        
       </div>
     </main>
     
@@ -100,6 +108,9 @@ import AppFooter from '@/components/AppFooter.vue';
 import Step6Max from '@/assets/Step6_max.svg';
 import Step6Mean from '@/assets/Step6_mean.svg';
 import bivariate from '@/assets/bivariate.png';
+import piechart_NO2 from '@/assets/piechart_NO2.png';
+import piechart_PM10 from '@/assets/piechart_PM10.png';
+import piechart_PM2P5 from '@/assets/piechart_PM2P5.png';
 
 // Sample data
 const pollutants = ref([
