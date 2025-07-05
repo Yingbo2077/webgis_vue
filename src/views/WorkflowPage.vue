@@ -20,7 +20,7 @@
     </div>
 
     <!-- Purpose Section -->
-    <div class="purpose-section py-12 h-[500px]" style="background-color: rgba(210,228,255,0.3);">
+    <div class="purpose-section py-8 h-[430px]" style="background-color: rgba(210,228,255,0.3);">
       <div class="container mx-auto px-8 h-full">
         <div class="flex flex-row items-start justify-between h-full">
           <!-- Main Content -->
@@ -38,7 +38,7 @@
           </div>
           
           <!-- Quote -->
-          <div class="w-1/3 p-6 mb-12 pt-[230px]">
+          <div class="w-1/3 p-6 mb-12 pt-[210px]">
             <p class="text-base text-gray-500 italic">
               Final Deliverables:<br>
               – Annual concentration maps (2013–2022)<br>
@@ -61,7 +61,7 @@
           <!-- Step 1: Data Collection -->
           <div class="step-card" @click="navigateToStep('data-collection')">
             <div :class="cardClasses">
-              <div :class="imageClasses" :style="{ backgroundImage: `url(${step1Bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }"></div>
+              <div :class="imageClasses" :style="{ backgroundImage: `url(${step1Bg})`, backgroundSize: 'cover', backgroundPosition: 'left top' }"></div>
               <div :class="contentClasses">
                 <h3 class="text-2xl font-semibold mb-4">Air Pollutant Mapping and Classification</h3>
                 <p class="text-gray-600">
@@ -74,7 +74,7 @@
           <!-- Step 2: Analysis -->
           <div class="step-card" @click="navigateToStep('analysis')">
             <div :class="cardClasses">
-              <div :class="imageClasses" :style="{ backgroundImage: `url(${step2Bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }"></div>
+              <div :class="imageClasses" :style="{ backgroundImage: `url(${step2Bg})`, backgroundSize: 'cover', backgroundPosition: 'left top'}"></div>
               <div :class="contentClasses">
                 <h3 class="text-2xl font-semibold mb-4">Land Cover Processing and Pollution Zonal Analysis</h3>
                 <p class="text-gray-600">
@@ -87,7 +87,7 @@
           <!-- Step 3: Implementation -->
           <div class="step-card" @click="navigateToStep('implementation')">
             <div :class="cardClasses">
-              <div :class="imageClasses" :style="{ backgroundImage: `url(${step3Bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }"></div>
+              <div :class="imageClasses" :style="{ backgroundImage: `url(${step3Bg})`, backgroundSize: 'cover', backgroundPosition: 'left top' }" ></div>
               <div :class="contentClasses">
                 <h3 class="text-2xl font-semibold mb-4">Population Exposure Analysis and Visualization</h3>
                 <p class="text-gray-600">
@@ -109,9 +109,9 @@ import { useRouter } from 'vue-router';
 import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 import workflow1Bg from '@/assets/workflow1.jpg';
-import step1Bg from '@/assets/workflow1.jpg';  // 暂时使用相同的图片，您可以替换为实际的图片
-import step2Bg from '@/assets/workflow2.jpg';
-import step3Bg from '@/assets/workflow.jpg';
+import step1Bg from '@/assets/step1.png';
+import step2Bg from '@/assets/step2.png';
+import step3Bg from '@/assets/step3.png';
 
 // Card Styles
 const cardClasses = [
@@ -127,12 +127,12 @@ const cardClasses = [
 ].join(' ');
 
 const imageClasses = [
-  'h-[350px]', // 固定图片高度
+  'h-[350px]',
   'rounded-t-lg',
   'transition-transform',
   'duration-300',
   'transform',
-  'hover:scale-105' // 添加图片悬停效果
+  'hover:scale-105'
 ].join(' ');
 
 const contentClasses = [
