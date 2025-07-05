@@ -70,10 +70,11 @@
         <div class="table-container">
           <h1 class="text-1xl font-bold mb-2">ESA CCI Land Cover</h1>
           <h3>Reclassification schema according to ESA CCI Land Cover classification system</h3>
+           <img :src="LC" alt="LC" class="image-rowrow"/>
           <table class="data-table">
             <thead>
               <tr>
-                <th>Class</th>
+                <th>Row</th>
                 <th>IPCC Classes</th>
                 <th>LCC Legend</th>
               </tr>
@@ -86,6 +87,8 @@
               </tr>
             </tbody>
           </table>
+
+
         </div>
 
 
@@ -99,7 +102,7 @@
         </div>
         
          <div class="chart-container">
-          <h1 class="text-1xl font-bold mb-2">Bivariate map and legend</h1>
+          <h1 class="text-1xl font-bold mb-2">Bivariate map and legend (Year 2020)</h1>
           <h3>Bivariate map of {{ selectedPollutantLabel }} contaminant</h3>
             <p v-if="selectedPollutantLabel === 'NO₂'">
               <img :src="bivariate_NO2" alt="bivariate_NO2" class="image-rowrow"/>
@@ -115,7 +118,7 @@
         </div>
         
        <div class="chart-container">
-          <h1 class="text-1xl font-bold mb-2">Pie chart</h1>
+          <h1 class="text-1xl font-bold mb-2">Pie charts (Year 2020)</h1>
           <h3>Percentage of population exposed to different concentration categories of {{ selectedPollutantLabel }} contaminant</h3>
             <p v-if="selectedPollutantLabel === 'NO₂'"> 
               <img :src="piechart_NO2" alt="piechart_NO2" class="image-row"/>
@@ -151,6 +154,7 @@ import bivariate_NO2 from '@/assets/bivariate_NO2.png';
 import bivariate_PM10 from '@/assets/bivariate_PM10.png';
 import bivariate_PM2P5 from '@/assets/bivariate_PM2P5.png';
 import workflow1Bg from '@/assets/workflow1.jpg';
+import LC from '@/assets/LC.png';
 
 // Sample data
 const pollutants = ref([
