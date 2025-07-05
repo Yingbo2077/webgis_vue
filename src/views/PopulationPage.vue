@@ -68,7 +68,7 @@
                 </div>
                 <div class="w-[400px] flex-none">
                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[350px]">
-                    <img src="@/assets/bivariate.png" alt="Rasterization Process" class="w-full h-full object-contain object-left-top"/>
+                    <img src="@/assets/bivariate_yi.png" alt="Rasterization Process" class="w-full h-full object-contain object-left-top"/>
                   </div>
                   <p class="text-gray-500 text-sm mt-2 text-center">Creating a Bivariate Field Using Field Calculator
                   </p>
