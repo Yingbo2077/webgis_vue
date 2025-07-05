@@ -78,10 +78,10 @@ const teamMembers = ref([
   {
     name: 'Esteban Ceccarelli',
     role: 'Geotechnical Engineer',
-    description: 'Responsible for core WebGIS functionality development, focusing on spatial data processing and map interaction features. With over 5 years of experience in geospatial technologies.',
-    avatar: 'https://via.placeholder.com/150',
-    skills: ['OpenLayers', 'PostGIS', 'Python', 'JavaScript', 'Spatial Analysis'],
-    email: 'john.smith@webgis-project.com'
+    description: 'Responsible for air quality data analysis and visualization.',
+    avatar: new URL('@/assets/cecca.jpg', import.meta.url).href,
+    skills: ['ArcGIS', 'QGIS', 'Python', 'JavaScript', 'GitHub'],
+    email: 'esteban.ceccarelli@webgis-project.com'
   },
   {
     name: 'Emily Johnson',
