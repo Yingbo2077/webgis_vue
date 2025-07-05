@@ -130,7 +130,7 @@
               <div class="bg-gray-100 rounded-lg overflow-hidden h-[350px] mr-8">
                 <img src="@/assets/annual.png" alt="Annual Mean Analysis Results" class="w-full h-full object-cover"/>
               </div>
-              <p class="text-gray-500 text-sm mt-2 text-center">Annual Average Pollution Map Example: PM2.5 (2013)</p>
+              <p class="text-gray-500 text-sm  text-center">Annual Average Pollution Map Example: PM2.5 (2013)</p>
             </div>
             
             <!-- Right side - Text content -->
@@ -156,7 +156,7 @@
         </div>
 
         <!-- Section 4-->
-        <div class="content-card ">
+        <div class="content-card  mt-8">
           <h2 class="text-3xl font-semibold mb-8"> Reclassification of Yearly Pollution Maps (2020)</h2>
           <div class="flex gap-4 ">
 
@@ -183,13 +183,54 @@
             </div>
             <!-- right side - Image -->
             <div class="w-1/2 flex-none pl-8">
-              <div class="bg-gray-100 rounded-lg overflow-hidden h-[350px] mr-8">
-                <img src="@/assets/standard.png" alt="Annual Mean Analysis Results" class="w-full h-full object-cover"/>
+              <div class="bg-gray-100 rounded-lg overflow-hidden h-[235px] mr-8 mt-8">
+                <img src="@/assets/standard.png"
+                     alt="Annual Mean Analysis Results"
+                     class="w-full h-full object-contain"
+                     style="object-position: left top;" />
               </div>
-              <p class="text-gray-500 text-sm mt-2 text-center">PM2.5 Concentration Classification Map – 2020</p>
+              <p class="text-gray-500 text-sm  text-center">Current EU limit values</p>
             </div>
           </div>
         </div>
+
+        <!-- Section 5-->
+        <div class="content-card mb-16 mt-16">
+          <h2 class="text-3xl font-semibold mb-8">Annual Difference from 5-Year Mean</h2>
+          <div class="flex gap-8 ">
+            <!-- Left side - Image -->
+            <div class="w-1/2 flex-none pl-8">
+              <div class="bg-gray-100 rounded-lg overflow-hidden h-[231px] mr-8 mt-8">
+                <img src="@/assets/symbology.png" alt="Annual Mean Analysis Results"
+                     class="w-full h-full object-contain"
+                     style="object-position: left top;"/>
+              </div>
+              <p class="text-gray-500 text-sm  text-center">Symbology Thresholds for 5-Year Difference Classification</p>
+            </div>
+
+            <!-- Right side - Text content -->
+            <div class="w-1/2 flex-none pr-8 pb-8">
+              <div class="flex flex-col gap-6 h-full">
+                <div>
+                  <h4 class="section-title">1.  Compute Annual Difference</h4>
+                  <p class="content-text mb-4">
+                    To evaluate changes in pollution levels, the annual average of 2022 for each pollutant (NO₂, PM2.5, PM10) was compared to the five-year mean from 2017 to 2021. This was computed using the Raster Calculator in QGIS, with an expression such as:
+                    POLLUTANT_2022 - AVERAGE(2017–2021).
+                  </p>
+
+                </div>
+                <div>
+
+                  <h4 class="section-title mt-4">2. Apply Classification & Styling</h4>
+                  <p class="content-text mb-4">
+                    The resulting difference maps reveal deviations from the historical baseline. Positive values indicate worsening pollution—possibly due to wildfires or increased traffic—while negative values reflect improvements potentially linked to lockdowns or regulations. Discrete color styling was applied for each pollutant to visualize spatial trends and anomalies.                 </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
 
       </div>
     </div>

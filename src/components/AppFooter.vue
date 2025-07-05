@@ -16,10 +16,10 @@
         <div>
           <h6 class="uppercase font-bold mb-4 border-b border-black border-opacity-30 pb-2">Data Sources</h6>
           <ul class="text-sm">
-            <li class="mb-2"><a href="#!" class="hover:underline">CAMS Reanalysis 2013-2022</a></li>
-            <li class="mb-2"><a href="#!" class="hover:underline">ESA CCI Land Cover 2022</a></li>
-            <li class="mb-2"><a href="#!" class="hover:underline">WorldPop Population 2020</a></li>
-            <li><a href="#!" class="hover:underline">WHO AQ Guidelines</a></li>
+            <li class="mb-2"><a href="https://ads.atmosphere.copernicus.eu/datasets/cams-europe-air-quality-reanalyses?tab=overview" class="hover:underline">CAMS Reanalysis 2013-2022</a></li>
+            <li class="mb-2"><a href="https://cds.climate.copernicus.eu/datasets/satellite-land-cover?tab=overview" class="hover:underline">ESA CCI Land Cover 2022</a></li>
+            <li class="mb-2"><a href="https://hub.worldpop.org/geodata/listing?id=29" class="hover:underline">WorldPop Population 2020</a></li>
+            <li><a href="https://data.apps.fao.org/catalog/dataset/b0634117-37c0-4125-ad87-89cb9aec4eea" class="hover:underline">Global Administrative Unit Layers</a></li>
           </ul>
         </div>
 
@@ -27,9 +27,9 @@
         <div>
           <h6 class="uppercase font-bold mb-4 border-b border-black border-opacity-30 pb-2">Tools Used</h6>
           <ul class="text-sm">
-            <li class="mb-2"><a href="#!" class="hover:underline">QGIS, GRASS, SAGA</a></li>
-            <li class="mb-2"><a href="#!" class="hover:underline">GeoServer, OpenLayers</a></li>
-            <li><a href="#!" class="hover:underline">Vue.js, Tailwind CSS</a></li>
+            <li class="mb-2">QGIS, GRASS</li>
+            <li class="mb-2">GeoServer, OpenLayers</li>
+            <li>Vue.js, Tailwind CSS</li>
           </ul>
         </div>
 
