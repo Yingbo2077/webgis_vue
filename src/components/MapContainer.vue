@@ -13,12 +13,70 @@
         </div>
       </div>
       
+      <!-- NO2 Layers -->
       <div class="layer-control">
-        <h3>Data Layers</h3>
-        <div class="layer-list">
-          <div v-for="(layer, index) in dataLayers" :key="'data-' + index" class="layer-item">
-            <input type="checkbox" :id="'layer-' + index" v-model="layer.visible" @change="toggleLayer(layer)" />
-            <label :for="'layer-' + index">{{ layer.name }}</label>
+        <div class="layer-folder" @click="toggleFolder('no2')">
+          <h3>NO₂ Layers</h3>
+          <button class="folder-toggle-btn">
+            <span v-if="expandedFolders.no2">−</span>
+            <span v-else>+</span>
+          </button>
+        </div>
+        <div class="layer-list" v-show="expandedFolders.no2">
+          <div v-for="(layer, index) in no2Layers" :key="'no2-' + index" class="layer-item">
+            <input type="checkbox" :id="'no2-layer-' + index" v-model="layer.visible" @change="toggleLayer(layer)" />
+            <label :for="'no2-layer-' + index">{{ layer.name }}</label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PM2.5 Layers -->
+      <div class="layer-control">
+        <div class="layer-folder" @click="toggleFolder('pm25')">
+          <h3>PM₂.₅ Layers</h3>
+          <button class="folder-toggle-btn">
+            <span v-if="expandedFolders.pm25">−</span>
+            <span v-else>+</span>
+          </button>
+        </div>
+        <div class="layer-list" v-show="expandedFolders.pm25">
+          <div v-for="(layer, index) in pm25Layers" :key="'pm25-' + index" class="layer-item">
+            <input type="checkbox" :id="'pm25-layer-' + index" v-model="layer.visible" @change="toggleLayer(layer)" />
+            <label :for="'pm25-layer-' + index">{{ layer.name }}</label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PM10 Layers -->
+      <div class="layer-control">
+        <div class="layer-folder" @click="toggleFolder('pm10')">
+          <h3>PM₁₀ Layers</h3>
+          <button class="folder-toggle-btn">
+            <span v-if="expandedFolders.pm10">−</span>
+            <span v-else>+</span>
+          </button>
+        </div>
+        <div class="layer-list" v-show="expandedFolders.pm10">
+          <div v-for="(layer, index) in pm10Layers" :key="'pm10-' + index" class="layer-item">
+            <input type="checkbox" :id="'pm10-layer-' + index" v-model="layer.visible" @change="toggleLayer(layer)" />
+            <label :for="'pm10-layer-' + index">{{ layer.name }}</label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Land Cover Layers -->
+      <div class="layer-control">
+        <div class="layer-folder" @click="toggleFolder('landcover')">
+          <h3>Land Cover Layers</h3>
+          <button class="folder-toggle-btn">
+            <span v-if="expandedFolders.landcover">−</span>
+            <span v-else>+</span>
+          </button>
+        </div>
+        <div class="layer-list" v-show="expandedFolders.landcover">
+          <div v-for="(layer, index) in landcoverLayers" :key="'landcover-' + index" class="layer-item">
+            <input type="checkbox" :id="'landcover-layer-' + index" v-model="layer.visible" @change="toggleLayer(layer)" />
+            <label :for="'landcover-layer-' + index">{{ layer.name }}</label>
           </div>
         </div>
       </div>
@@ -75,8 +133,63 @@ import { fromLonLat } from 'ol/proj'
 const mapContainer = ref(null)
 let map = null
 
-// Define layers
-const layers = reactive([
+// Folder expansion state
+const expandedFolders = reactive({
+  no2: false,
+  pm25: false,
+  pm10: false,
+  landcover: true
+})
+
+// Toggle folder expansion
+const toggleFolder = (folderName) => {
+  expandedFolders[folderName] = !expandedFolders[folderName]
+}
+
+// NO2 图层
+const no2Layers = reactive([
+  { name: 'Switzerland _no2 _2017-2021_AAD_map _2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland _no2 _2017-2021_AAD_map _2022' },
+  { name: 'Switzerland_no2_2020_bivariate', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_no2_2020_bivariate' },
+  { name: 'Switzerland_no2_2020_chart', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_no2_2020_chart' },
+  { name: 'switzerland_CAMS_no2_2022_12', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_CAMS_no2_2022_12' },
+  { name: 'switzerland_average_no2_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_average_no2_2022' },
+  { name: 'switzerland_no2_concentration_map_2020', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_no2_concentration_map_2020' },
+  { name: 'switzerland_no2_zonal_statistics_20132022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_no2_zonal_statistics_20132022' }
+])
+
+// PM2.5 图层
+const pm25Layers = reactive([
+  { name: 'Switzerland_CAMS_pm2p5_2022_12', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_CAMS_pm2p5_2022_12' },
+  { name: 'Switzerland_average_pm2p5_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_average_pm2p5_2022' },
+  { name: 'Switzerland_pm2m5_concentration_map_2020', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2m5_concentration_map_2020' },
+  { name: 'Switzerland_pm2p5_2017-2021_AAD_map_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2p5_2017-2021_AAD_map_2022' },
+  { name: 'Switzerland_pm2p5_2020_bivariate', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2p5_2020_bivariate' },
+  { name: 'Switzerland_pm2p5_2020_chart', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2p5_2020_chart' },
+  { name: 'switzerland_2013', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_2013' }
+])
+
+// PM10 图层
+const pm10Layers = reactive([
+  { name: 'Switzerland_CAMS_pm10_2022_12', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_CAMS_pm10_2022_12' },
+  { name: 'Switzerland_average_pm10_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_average_pm10_2022' },
+  { name: 'Switzerland_pm10_2017-2021_AAD_map_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_2017-2021_AAD_map_2022' },
+  { name: 'Switzerland_pm10_2020_bivariate', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_2020_bivariate' },
+  { name: 'Switzerland_pm10_2020_chart', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_2020_chart' },
+  { name: 'Switzerland_pm10_concentration_map_2020', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_concentration_map_2020' },
+  { name: 'switzerland_pm10_zonal_statistics_2013', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_pm10_zonal_statistics_2013' }
+])
+
+const landcoverLayers = reactive([
+  {
+    name: 'Switzerland LC Reclassified 2022',
+    visible: false,
+    layer: null,
+    geoserverLayer: 'gisgeoserver_17:Switzerland_LC_reclassied_2022'
+  }
+])
+
+// Basemap layers
+const basemapLayers = reactive([
   {
     name: 'OpenStreetMap',
     visible: true,
@@ -88,54 +201,20 @@ const layers = reactive([
     visible: false,
     layer: null,
     isBaseMap: true
-  },
-  {
-    name: 'Switzerland NO₂ 2017-2021 AAD Map 2022',
-    visible: false,
-    layer: null,
-    geoserverLayer: 'gisgeoserver_17:Switzerland _no2 _2017-2021_AAD_map _2022'
-  },
-  {
-    name: 'Switzerland LC Reclassified 2022',
-    visible: false,
-    layer: null,
-    geoserverLayer: 'gisgeoserver_17:Switzerland_LC_reclassied_2022'
-  },
-  {
-    name: 'Switzerland NO₂ 2020 Bivariate',
-    visible: true,
-    layer: null,
-    geoserverLayer: 'gisgeoserver_17:Switzerland_no2_2020_bivariate'
-  },
-  {
-    name: 'Switzerland NO₂ Concentration Map 2020',
-    visible: false,
-    layer: null,
-    geoserverLayer: 'gisgeoserver_17:switzerland_no2_concentration_map_2020'
-  },
-  {
-    name: 'Switzerland NO₂ Zonal Statistics 2013-2022',
-    visible: false,
-    layer: null,
-    geoserverLayer: 'gisgeoserver_17:swizterland_no2_zonal_statistics_20132022'
   }
 ])
 
 // Legend
-const legendExpanded = ref(true)
+const legendExpanded = ref(false)
 
-// Computed properties to separate basemap and data layers
-const basemapLayers = computed(() => {
-  return layers.filter(layer => layer.isBaseMap)
-})
-
-const dataLayers = computed(() => {
-  return layers.filter(layer => !layer.isBaseMap)
+// Computed property to get all data layers
+const allDataLayers = computed(() => {
+  return [...no2Layers, ...pm25Layers, ...pm10Layers, ...landcoverLayers]
 })
 
 // Computed property to get visible layers with geoserver layers
 const visibleLayers = computed(() => {
-  return layers.filter(layer => layer.visible && layer.geoserverLayer)
+  return allDataLayers.value.filter(layer => layer.visible && layer.geoserverLayer)
 })
 
 // Selected basemap state
@@ -149,7 +228,7 @@ const toggleLegendExpanded = () => {
 // Switch basemap function
 const switchBasemap = (selectedLayer) => {
   // Turn off all basemap layers
-  basemapLayers.value.forEach(layer => {
+  basemapLayers.forEach(layer => {
     layer.visible = false
     if (layer.layer) {
       layer.layer.setVisible(false)
@@ -207,7 +286,7 @@ onMounted(() => {
   })
   
   // Initialize layers
-  layers[0].layer = baseLayer
+  basemapLayers[0].layer = baseLayer
   
   // Create satellite layer
   const satelliteLayer = new TileLayer({
@@ -219,7 +298,7 @@ onMounted(() => {
   })
   
   map.addLayer(satelliteLayer)
-  layers[1].layer = satelliteLayer
+  basemapLayers[1].layer = satelliteLayer
   
   // Load other layers
   initializeLayers()
@@ -228,10 +307,9 @@ onMounted(() => {
 // Initialize layers
 const initializeLayers = () => {
   // Create all GeoServer WMS layers dynamically
-  layers.forEach((layerConfig) => {
-    // Skip base map layers
-    if (layerConfig.isBaseMap) return;
-    
+  const allLayers = [...no2Layers, ...pm25Layers, ...pm10Layers, ...landcoverLayers]
+  
+  allLayers.forEach((layerConfig) => {
     if (layerConfig.geoserverLayer) {
       const geoserverLayer = new TileLayer({
         source: new TileWMS({
@@ -269,7 +347,7 @@ const toggleLayer = (layerItem) => {
   if (layerItem.layer) {
     // If this data layer is being turned on, turn off all other data layers
     if (layerItem.visible) {
-      dataLayers.value.forEach(layer => {
+      allDataLayers.value.forEach(layer => {
         if (layer !== layerItem) {
           layer.visible = false
           if (layer.layer) {
@@ -334,11 +412,13 @@ const toggleMeasurement = () => {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 250px;
+  width: 280px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   z-index: 1000;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .basemap-control, .layer-control, .legend {
@@ -353,6 +433,40 @@ const toggleMeasurement = () => {
   margin-bottom: 10px;
   font-size: 16px;
   color: #333;
+}
+
+.layer-folder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.layer-folder h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.folder-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.folder-toggle-btn:hover {
+  color: #333;
+  background-color: #f0f0f0;
+  border-radius: 50%;
 }
 
 .basemap-list {
