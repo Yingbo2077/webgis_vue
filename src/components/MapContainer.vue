@@ -20,7 +20,7 @@
 
     <!-- 黑白经典指北针，居中上方 -->
     <div class="north-arrow-center">
-      <svg width="44" height="44" viewBox="0 0 44 44">
+      <svg width="88" height="88" viewBox="0 0 44 44">
         <polygon points="22,7 17,27 22,20 27,27" fill="#222"/>
       </svg>
     </div>
@@ -580,15 +580,15 @@ const toggleLayer = (layerItem) => {
 
 .scale-bar-classic {
   position: absolute;
-  bottom: 10px;
+  bottom: 110px;
   left: 10px;
   z-index: 9999 !important;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  padding: 8px;
-  min-width: 60px;
-  min-height: 30px;
+  padding: 16px;
+  min-width: 120px;
+  min-height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -597,13 +597,13 @@ const toggleLayer = (layerItem) => {
 }
 
 .scale-bar-line {
-  height: 2px;
+  height: 4px;
   background-color: black;
 }
 
 .scale-bar-label {
   margin-left: 8px;
-  font-size: 12px;
+  font-size: 14px;
   color: #333;
 }
 
