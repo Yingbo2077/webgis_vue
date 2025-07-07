@@ -2,13 +2,38 @@
   <div class="map-container">
     <div id="map" ref="mapContainer"></div>
     
+    <!-- 单独图例div，左上角，显示当前激活图层的图例 -->
+    <div v-for="layer in visibleLayers" :key="layer.geoserverLayer" v-show="layer.visible" :id="'legend-' + layer.geoserverLayer.replace(/[:.]/g, '-')" class="custom-legend-box legend-top-left">
+      <img 
+        :src="getLegendUrl(layer.geoserverLayer)" 
+        :alt="`Legend for ${layer.name}`"
+        class="legend-image"
+        @error="onLegendError"
+      />
+    </div>
+
+    <!-- 动态比例尺，左下角 -->
+    <div class="scale-bar-classic">
+      <div class="scale-bar-line" :style="{ width: scaleBarWidth + 'px' }"></div>
+      <div class="scale-bar-label">{{ scaleBarLabel }}</div>
+    </div>
+
+    <!-- 黑白经典指北针，居中上方 -->
+    <div class="north-arrow-center">
+      <svg width="44" height="44" viewBox="0 0 44 44">
+        <polygon points="22,7 17,27 22,20 27,27" fill="#222"/>
+      </svg>
+    </div>
+
     <div class="map-controls">
-      <div class="basemap-control">
-        <h3>Basemap</h3>
-        <div class="basemap-list">
-          <div v-for="(layer, index) in basemapLayers" :key="'basemap-' + index" class="basemap-item">
-            <input type="radio" :id="'basemap-' + index" :value="layer.name" v-model="selectedBasemap" @change="switchBasemap(layer)" />
-            <label :for="'basemap-' + index">{{ layer.name }}</label>
+      <div class="map-controls-row">
+        <div class="basemap-control">
+          <h3>Basemap</h3>
+          <div class="basemap-list">
+            <div v-for="(layer, index) in basemapLayers" :key="'basemap-' + index" class="basemap-item">
+              <input type="radio" :id="'basemap-' + index" :value="layer.name" v-model="selectedBasemap" @change="switchBasemap(layer)" />
+              <label :for="'basemap-' + index">{{ layer.name }}</label>
+            </div>
           </div>
         </div>
       </div>
@@ -80,44 +105,9 @@
           </div>
         </div>
       </div>
-      
-      <div class="map-toolbar">
-        <button class="tool-button" title="Zoom In" @click="zoomIn">
-          <span>+</span>
-        </button>
-        <button class="tool-button" title="Zoom Out" @click="zoomOut">
-          <span>-</span>
-        </button>
-        <button class="tool-button" title="Reset View" @click="resetView">
-          <span>⟲</span>
-        </button>
-        <button class="tool-button" title="Measure" @click="toggleMeasurement">
-          <span>📏</span>
-        </button>
-      </div>
-      
-      <div class="legend" v-if="visibleLayers.length > 0">
-        <div class="legend-header" @click="toggleLegendExpanded">
-          <h3>Legend</h3>
-          <button class="legend-toggle-btn">
-            <span v-if="legendExpanded">−</span>
-            <span v-else>+</span>
-          </button>
-        </div>
-        <div class="legend-content" v-show="legendExpanded">
-          <div v-for="layer in visibleLayers" :key="layer.geoserverLayer" class="legend-layer">
-            <h4>{{ layer.name }}</h4>
-            <img 
-              :src="getLegendUrl(layer.geoserverLayer)" 
-              :alt="`Legend for ${layer.name}`"
-              class="legend-image"
-              @error="onLegendError"
-            />
-          </div>
-        </div>
-      </div>
     </div>
   </div>
+  
 </template>
 
 <script setup>
@@ -129,16 +119,21 @@ import OSM from 'ol/source/OSM'
 import XYZ from 'ol/source/XYZ'
 import TileWMS from 'ol/source/TileWMS'
 import { fromLonLat } from 'ol/proj'
+import { defaults as defaultControls } from 'ol/control'
 
 const mapContainer = ref(null)
 let map = null
+
+// 比例尺相关响应式数据
+const scaleBarWidth = ref(80)
+const scaleBarLabel = ref('1 km')
 
 // Folder expansion state
 const expandedFolders = reactive({
   no2: false,
   pm25: false,
   pm10: false,
-  landcover: true
+  landcover: false
 })
 
 // Toggle folder expansion
@@ -146,47 +141,44 @@ const toggleFolder = (folderName) => {
   expandedFolders[folderName] = !expandedFolders[folderName]
 }
 
-// NO2 图层
+// NO2 layers
 const no2Layers = reactive([
-  { name: 'Switzerland _no2 _2017-2021_AAD_map _2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland _no2 _2017-2021_AAD_map _2022' },
-  { name: 'Switzerland_no2_2020_bivariate', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_no2_2020_bivariate' },
-  { name: 'Switzerland_no2_2020_chart', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_no2_2020_chart' },
-  { name: 'switzerland_CAMS_no2_2022_12', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_CAMS_no2_2022_12' },
-  { name: 'switzerland_average_no2_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_average_no2_2022' },
-  { name: 'switzerland_no2_concentration_map_2020', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_no2_concentration_map_2020' },
-  { name: 'switzerland_no2_zonal_statistics_20132022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_no2_zonal_statistics_20132022' }
+  { name: 'NO2 - CAMS (Dec 2022)',            visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_CAMS_no2_2022_12' },
+  { name: 'NO2 - Annual Avg 2022',            visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_average_no2_2022' },
+  { name: 'NO2 - Concentration 2020',         visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_no2_concentration_map_2020' },
+  { name: 'NO2 - AAD 2017-21 (2022)',     visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland _no2 _2017-2021_AAD_map _2022' },
+  { name: 'NO2 - Zonal Stats 2013',           visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_no2_zonal_statistics_2013' },
+  { name: 'NO2 - Bivariate with Population 2020',             visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_no2_2020_bivariate' },
+  { name: 'NO2 - 2020 Chart',                 visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_no2_2020_chart' }
 ])
 
-// PM2.5 图层
+// PM2.5 layers
 const pm25Layers = reactive([
-  { name: 'Switzerland_CAMS_pm2p5_2022_12', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_CAMS_pm2p5_2022_12' },
-  { name: 'Switzerland_average_pm2p5_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_average_pm2p5_2022' },
-  { name: 'Switzerland_pm2m5_concentration_map_2020', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2m5_concentration_map_2020' },
-  { name: 'Switzerland_pm2p5_2017-2021_AAD_map_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2p5_2017-2021_AAD_map_2022' },
-  { name: 'Switzerland_pm2p5_2020_bivariate', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2p5_2020_bivariate' },
-  { name: 'Switzerland_pm2p5_2020_chart', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2p5_2020_chart' },
-  { name: 'switzerland_2013', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_2013' }
+  { name: 'PM2.5 - CAMS (Dec 2022)',          visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_CAMS_pm2p5_2022_12' },
+  { name: 'PM2.5 - Annual Avg 2022',          visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_average_pm2p5_2022' },
+  { name: 'PM2.5 - Concentration 2020',       visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2m5_concentration_map_2020' },
+  { name: 'PM2.5 - AAD 2017-21 (2022)',   visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2p5_2017-2021_AAD_map_2022' },
+  { name: 'PM2.5 - Zonal Stats 2013',         visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_2013' },
+  { name: 'PM2.5 - Bivariate with Population 2020',           visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_pm2p5_2020_bivariate' },
+  { name: 'PM2.5 - 2020 Chart',               visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm2p5_2020_chart' }
 ])
 
-// PM10 图层
+// PM10 layers
 const pm10Layers = reactive([
-  { name: 'Switzerland_CAMS_pm10_2022_12', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_CAMS_pm10_2022_12' },
-  { name: 'Switzerland_average_pm10_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_average_pm10_2022' },
-  { name: 'Switzerland_pm10_2017-2021_AAD_map_2022', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_2017-2021_AAD_map_2022' },
-  { name: 'Switzerland_pm10_2020_bivariate', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_2020_bivariate' },
-  { name: 'Switzerland_pm10_2020_chart', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_2020_chart' },
-  { name: 'Switzerland_pm10_concentration_map_2020', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_concentration_map_2020' },
-  { name: 'switzerland_pm10_zonal_statistics_2013', visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_pm10_zonal_statistics_2013' }
+  { name: 'PM10 - CAMS (Dec 2022)',           visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_CAMS_pm10_2022_12' },
+  { name: 'PM10 - Annual Avg 2022',           visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_average_pm10_2022' },
+  { name: 'PM10 - Concentration 2020',        visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_concentration_map_2020' },
+  { name: 'PM10 - AAD 2017-21 (2022)',    visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_2017-2021_AAD_map_2022' },
+  { name: 'PM10 - Zonal Stats 2013',          visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_pm10_zonal_statistics_2013' },
+  { name: 'PM10 - Bivariate with Population 2020',            visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:switzerland_pm10_2020_bivariate' },
+  { name: 'PM10 - 2020 Chart',                visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_pm10_2020_chart' }
 ])
 
+// Land-cover layer
 const landcoverLayers = reactive([
-  {
-    name: 'Switzerland LC Reclassified 2022',
-    visible: false,
-    layer: null,
-    geoserverLayer: 'gisgeoserver_17:Switzerland_LC_reclassied_2022'
-  }
+  { name: 'Land Cover - Reclassified 2022',   visible: false, layer: null, geoserverLayer: 'gisgeoserver_17:Switzerland_LC_reclassied_2022' }
 ])
+
 
 // Basemap layers
 const basemapLayers = reactive([
@@ -204,9 +196,6 @@ const basemapLayers = reactive([
   }
 ])
 
-// Legend
-const legendExpanded = ref(false)
-
 // Computed property to get all data layers
 const allDataLayers = computed(() => {
   return [...no2Layers, ...pm25Layers, ...pm10Layers, ...landcoverLayers]
@@ -219,11 +208,6 @@ const visibleLayers = computed(() => {
 
 // Selected basemap state
 const selectedBasemap = ref('OpenStreetMap')
-
-// Toggle legend expanded state
-const toggleLegendExpanded = () => {
-  legendExpanded.value = !legendExpanded.value
-}
 
 // Switch basemap function
 const switchBasemap = (selectedLayer) => {
@@ -264,6 +248,30 @@ const onLegendError = (event) => {
   event.target.style.display = 'none'
 }
 
+// 更新比例尺函数
+const updateScaleBar = () => {
+  if (map) {
+    const view = map.getView()
+    const resolution = view.getResolution()
+    const projection = view.getProjection()
+    const mpu = projection.getMetersPerUnit()
+    const dpi = 25.4 / 0.28
+    const realWorldMeters = resolution * mpu * 100 * dpi // 100像素代表的实际距离
+
+    // 选择合适的比例尺单位和长度
+    let displayValue, displayUnit
+    if (realWorldMeters >= 1000) {
+      displayValue = (realWorldMeters / 1000).toFixed(1)
+      displayUnit = 'km'
+    } else {
+      displayValue = Math.round(realWorldMeters)
+      displayUnit = 'm'
+    }
+    scaleBarWidth.value = 100
+    scaleBarLabel.value = `${displayValue} ${displayUnit}`
+  }
+}
+
 // Initialize map
 onMounted(() => {
   // Switzerland center coordinates (matching your layer data)
@@ -282,6 +290,11 @@ onMounted(() => {
     view: new View({
       center: switzerlandCenter,
       zoom: 8  // Zoom to see Switzerland clearly
+    }),
+    controls: defaultControls({
+      zoom: false,
+      rotate: false,
+      attribution: false
     })
   })
   
@@ -302,6 +315,8 @@ onMounted(() => {
   
   // Load other layers
   initializeLayers()
+  map.getView().on('change:resolution', updateScaleBar)
+  updateScaleBar()
 })
 
 // Initialize layers
@@ -360,39 +375,6 @@ const toggleLayer = (layerItem) => {
     layerItem.layer.setVisible(layerItem.visible)
   }
 }
-
-// Map tool functions
-const zoomIn = () => {
-  const view = map.getView()
-  const zoom = view.getZoom()
-  view.animate({
-    zoom: zoom + 1,
-    duration: 250
-  })
-}
-
-const zoomOut = () => {
-  const view = map.getView()
-  const zoom = view.getZoom()
-  view.animate({
-    zoom: zoom - 1,
-    duration: 250
-  })
-}
-
-const resetView = () => {
-  const view = map.getView()
-  view.animate({
-    center: fromLonLat([9.1859, 45.4642]),
-    zoom: 6,
-    duration: 500
-  })
-}
-
-const toggleMeasurement = () => {
-  // Implement measurement functionality in a real project
-  alert('Measurement functionality will be implemented in future development')
-}
 </script>
 
 <style scoped>
@@ -412,7 +394,8 @@ const toggleMeasurement = () => {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 280px;
+  width: 320px;
+  max-width: 90vw;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -421,11 +404,19 @@ const toggleMeasurement = () => {
   overflow-y: auto;
 }
 
-.basemap-control, .layer-control, .legend {
+.map-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.basemap-control, .layer-control {
   background-color: white;
   border-radius: 8px;
   padding: 15px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .basemap-control h3, .layer-control h3, .legend h3 {
@@ -503,33 +494,11 @@ const toggleMeasurement = () => {
   font-size: 14px;
   color: #555;
   cursor: pointer;
-}
-
-.map-toolbar {
-  display: flex;
-  gap: 5px;
-  background-color: white;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.tool-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
-  border: none;
-  background-color: #f5f5f5;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #555;
-}
-
-.tool-button:hover {
-  background-color: #e0e0e0;
+  white-space: normal;
+  word-break: break-all;
+  line-height: 1.4;
+  display: block;
+  max-width: 200px;
 }
 
 .legend-content {
@@ -589,5 +558,71 @@ const toggleMeasurement = () => {
   object-fit: contain;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+}
+
+.custom-legend-box.legend-top-left {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 9999 !important;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 8px;
+  min-width: 60px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  resize: both;
+  overflow: auto;
+}
+
+.scale-bar-classic {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 9999 !important;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 8px;
+  min-width: 60px;
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  resize: both;
+  overflow: auto;
+}
+
+.scale-bar-line {
+  height: 2px;
+  background-color: black;
+}
+
+.scale-bar-label {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #333;
+}
+
+.north-arrow-center {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999 !important;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  resize: none;
+  overflow: visible;
 }
 </style>
