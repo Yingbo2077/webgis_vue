@@ -62,7 +62,7 @@
       ></div>
 
       <!-- Core Modules Section -->
-      <div class="relative py-32 px-24 h-[750px] bg-transparent ">
+      <div class="relative py-32 px-24 h-[730px] bg-transparent ">
         <div class="flex flex-row justify-between items-center">
           <!-- Text Content -->
           <div class="w-1/3  mr-8 backdrop-blur-sm bg-white/30 p-8 rounded-lg">
@@ -136,7 +136,7 @@
       </div>
 
       <!-- Key Findings Section -->
-      <div class="relative flex items-center justify-center px-32 pt-8 pb-16 h-[750px] bg-transparent">
+      <div class="relative flex items-center justify-center px-32 pt-8 pb-16 mb-16 bg-transparent">
         <div class="flex flex-col items-center justify-center h-full  ">
           <!-- Text Content -->
           <div class="backdrop-blur-sm bg-white/50 p-12 rounded-lg w-[1200px] max-w-[90vw] mx-auto">            <div class="text-center">
@@ -154,12 +154,20 @@
               <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
                 Through comprehensive analysis of air quality data across Switzerland from 2013 to 2022, we've uncovered significant patterns and trends in pollutant concentrations and their impact on public health.
               </p>
-              <p class="text-gray-600 mb-8 max-w-2xl mx-auto">
-                Our research reveals the complex relationship between urban development, population density, and air quality. We've identified critical areas where NO₂ and PM concentrations exceed WHO guidelines, seasonal variations in pollutant levels, and the effectiveness of current air quality management strategies.
+            <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Bivariate maps show that regions like Zürich and Basel combine higher pollution and population levels, making them key zones of concern. In contrast, alpine and southern regions face much lower exposure.
+            </p>
+            <ul class="list-disc list-inside text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed space-y-2">
+              <li><strong>PM2.5:</strong> Over 96% of the population is exposed to low or moderate concentrations, with minimal high-level exposure.</li>
+              <li><strong>NO₂:</strong> Exposure is split between low and medium levels, suggesting wider urban impact.</li>
+              <li><strong>PM10:</strong> Exposure is overwhelmingly low, indicating relatively minor risk from this pollutant.</li>
+            </ul>
+              <p class="text-gray-600 max-w-2xl mx-auto mb-4">
+                Temporal Trends (2013–2022): All three pollutants show a gradual decrease in both maximum and average concentrations, especially NO₂, likely reflecting improved air quality measures.
               </p>
-              <p class="text-gray-600 max-w-2xl mx-auto">
-                Explore our detailed findings through interactive visualizations and comprehensive reports. Our analysis provides valuable insights for policymakers, researchers, and citizens interested in understanding and improving air quality in Switzerland.
-              </p>
+            <p class="text-gray-600 max-w-2xl mx-auto ">
+              Explore our detailed findings through interactive visualizations and comprehensive reports. Our analysis provides valuable insights for policymakers, researchers, and citizens interested in understanding and improving air quality in Switzerland.
+            </p>
             </div>
           </div>
         </div>
