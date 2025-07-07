@@ -55,7 +55,7 @@
             </div>
             <div class="modal-contact">
               <h4>Contact</h4>
-              <p>{{ selectedMember.email }}</p>
+              <p><a :href="'mailto:' + selectedMember.email" class="email-link">{{ selectedMember.email }}</a></p>
             </div>
           </div>
         </div>
@@ -77,27 +77,24 @@ const selectedIndex = ref(1); // Start with middle person (Emily Johnson)
 const teamMembers = ref([
   {
     name: 'Esteban Ceccarelli',
-    role: 'Geotechnical Engineer',
-    description: 'Responsible for air quality data analysis and visualization.',
+    description: 'Responsible for data analysis for results.',
     avatar: new URL('@/assets/cecca.jpg', import.meta.url).href,
     skills: ['ArcGIS', 'QGIS', 'Python', 'JavaScript', 'GitHub'],
-    email: 'esteban.ceccarelli@webgis-project.com'
+    email: 'esteban.ceccarelli@mail.polimi.it'
   },
   {
-    name: 'Emily Johnson',
-    role: 'Frontend Developer',
-    description: 'Responsible for user interface design and implementation, ensuring a good user experience for the WebGIS application. Specializes in modern web technologies and responsive design.',
-    avatar: 'https://via.placeholder.com/150',
-    skills: ['Vue.js', 'CSS3', 'HTML5', 'JavaScript', 'UI/UX Design'],
-    email: 'emily.johnson@webgis-project.com'
+    name: 'Cen Yiyi',
+    description: 'Responsible for air quality data analysis for workflow',
+    avatar: new URL('@/assets/cen yiyi.jpg', import.meta.url).href,
+    skills: ['Python', 'CSS3', 'HTML5', 'JavaScript', 'Java'],
+    email: 'yiyi.cen@mail.polimi.it'
   },
   {
     name: 'Sun Yingbo',
-    role: 'Data Scientist',
-    description: 'Responsible for air quality data analysis and visualization, developing prediction models and statistical analysis for environmental monitoring.',
+    description: 'Responsible for air quality data analysis and webgis visualization',
     avatar: new URL('@/assets/syb.jpg', import.meta.url).href,
-    skills: ['Python', 'R', 'Machine Learning', 'Data Visualization', 'Statistics'],
-    email: 'sun.yingbo@webgis-project.com'
+    skills: ['Python', 'JavaScript', 'vue.js', 'QGIS'],
+    email: 'yingbo.sun@mail.polimi.it'
   }
 ]);
 
@@ -639,6 +636,19 @@ const closeModal = () => {
   color: #666;
   margin: 0;
   font-size: 1rem;
+}
+
+.email-link {
+  color: #667eea;
+  text-decoration: underline;
+  word-break: break-all;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.email-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
 }
 
 @media (max-width: 768px) {
