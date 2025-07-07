@@ -83,19 +83,20 @@ const teamMembers = ref([
     email: 'esteban.ceccarelli@mail.polimi.it'
   },
   {
-    name: 'Cen Yiyi',
-    description: 'Responsible for air quality data analysis for workflow',
-    avatar: new URL('@/assets/cen yiyi.jpg', import.meta.url).href,
-    skills: ['Python', 'CSS3', 'HTML5', 'JavaScript', 'Java'],
-    email: 'yiyi.cen@mail.polimi.it'
-  },
-  {
     name: 'Sun Yingbo',
     description: 'Responsible for air quality data analysis and webgis visualization',
     avatar: new URL('@/assets/syb.jpg', import.meta.url).href,
     skills: ['Python', 'JavaScript', 'vue.js', 'QGIS'],
     email: 'yingbo.sun@mail.polimi.it'
+  },
+  {
+    name: 'Cen Yiyi',
+    description: 'Responsible for air quality data analysis for workflow',
+    avatar: new URL('@/assets/cen yiyi.jpg', import.meta.url).href,
+    skills: ['Python', 'CSS', 'HTML', 'JavaScript'],
+    email: 'yiyi.cen@mail.polimi.it'
   }
+  
 ]);
 
 const getSelectedClass = () => {
