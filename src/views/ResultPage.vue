@@ -23,7 +23,7 @@
       <div class="filter-section">
         
         <div class="filter-group">
-          <label for="pollutant-select">Pollutant:</label>
+          <label for="pollutant-select" >Pollutant:</label>
           <select id="pollutant-select" v-model="selectedPollutant">
             <option v-for="pollutant in pollutants" :key="pollutant.value" :value="pollutant.value">
               {{ pollutant.label }}
@@ -35,7 +35,8 @@
       <div class="results-container">
 
         <div class="table-container">
-          <h1 class="text-1xl font-bold mb-2"> Annual Concentration</h1>
+          <h2 class="text-2xl font-semibold mb-4">Annual Concentration</h2>
+
           <h3>Annual concentration of {{ selectedPollutantLabel }} contaminant</h3>
           <table class="data-table">
             <thead>
@@ -68,9 +69,31 @@
 
 
         <div class="table-container">
-          <h1 class="text-1xl font-bold mb-2">ESA CCI Land Cover</h1>
+          <h2 class="text-2xl font-semibold mb-4">ESA CCI Land Cover</h2>
+
           <h3>Reclassification schema according to ESA CCI Land Cover classification system</h3>
-           <img :src="LC" alt="LC" class="image-rowrow"/>
+          <div class="flex w-full">
+            <div class="w-1/2">
+              <!-- 左边内容 -->
+              <img :src="LC" alt="LC" class="image-rowrow"/>
+            </div>
+            <div class="w-1/2  p-6 rounded-lg   leading-relaxed mt-20 mr-4 ml-4">
+              <ul class="list-disc list-inside space-y-5 ">
+                <li>
+                  <strong>Settlements</strong> (red areas, class 5) are densely concentrated in the Swiss Plateau (central north), indicating strong urbanization in that region.
+                </li>
+                <li>
+                  <strong>Forests and Shrublands</strong> (orange–brown tones, class 2 & 6) dominate the alpine and pre-alpine zones, reflecting the mountainous terrain.
+                </li>
+                <li>
+                  <strong>Agricultural lands</strong> (light orange, class 1) are mostly distributed in flatter lowland areas, especially in the western and northern parts.
+                </li>
+                <li>
+                  <strong>Water bodies</strong> (blue, base area class) are clearly visible in central Switzerland (e.g., Lake Geneva, Lake Neuchâtel, Lake Zurich).
+                </li>
+              </ul>
+            </div>
+          </div>
           <table class="data-table">
             <thead>
               <tr>
@@ -91,44 +114,252 @@
 
         </div>
 
-
-
-
         <div class="chart-container">
-          <h1 class="text-1xl font-bold mb-2">Maximum and mean concentration</h1>
+          <h2 class="text-2xl font-semibold mb-4">Maximum and mean concentration</h2>
           <h3>Comparison of maximum and mean concentration value per year and contaminant</h3>
             <img :src="Step6Max" alt="Step6Max" class="image-rowrow"/>
             <img :src="Step6Mean" alt="Step6Mean" class="image-rowrow"/>
+          <div>
+            <h4 class="section-title ">Trend Analysis of Air Pollutant Concentrations (2013–2022)</h4>
+
+            <p class="content-text mb-4">
+              The charts illustrate the yearly maximum (left) and mean (right) concentrations of NO₂, PM₂.₅, and PM₁₀ from 2013 to 2022. Overall, there is a decreasing trend for all three pollutants, especially for NO₂, which dropped significantly after peaking in 2015. A sharp decline in 2020 aligns with the COVID-19 lockdowns and reduced anthropogenic emissions.                    </p>
+            <p class="content-text mb-6">
+              PM₂.₅ shows a relatively stable pattern with a slight decline, while PM₁₀ remains more variable and even records a high mean value again in 2022, indicating persistent issues in particulate matter control. Among the three, PM₁₀ generally exhibits the highest concentration values, underscoring its importance in air quality policy.
+            </p>
+          </div>
+
+
+
+
         </div>
-        
+
+
+
+
+
+
+
          <div class="chart-container">
-          <h1 class="text-1xl font-bold mb-2">Bivariate map and legend (Year 2020)</h1>
-          <h3>Bivariate map of {{ selectedPollutantLabel }} contaminant</h3>
-            <p v-if="selectedPollutantLabel === 'NO₂'">
-              <img :src="bivariate_NO2" alt="bivariate_NO2" class="image-rowrow"/>
-            </p>
-            <p v-else-if="selectedPollutantLabel === 'PM2.5'">
-              <img :src="bivariate_PM2P5" alt="bivariate_PM2P5" class="image-rowrow"/>
-            </p>
-            <p v-else-if="selectedPollutantLabel === 'PM10'">
-              <img :src="bivariate_PM10" alt="bivariate_PM10" class="image-rowrow"/>
-            </p>
-          <h3>Bivariate legend</h3>
-            <img :src="bivariate" alt="bivariate" class="image-row"/>
+           <h2 class="text-2xl font-semibold mb-8">Bivariate map and legend (Year 2020)</h2>
+           <div v-if="selectedPollutantLabel === 'PM2.5'">
+             <div class="content-card">
+               <div class="flex gap-12 mb-8 px-8 justify-start overflow-x-auto">
+                 <div class="w-[600px] flex-none ml-8">
+                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[320px]">
+                     <img :src="bivariate_PM2P5" alt="bivariate_PM2P5" class="w-full h-full object-center object-left-top"/>
+                   </div>
+                   <p class="text-gray-500 text-sm mt-2 text-center">Bivariate Map of PM2.5 Exposure and Population Distribution</p>
+                 </div>
+                 <div class="w-[370px] flex-none ml-16">
+                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[340px]">
+                     <img :src="bivariate" alt="bivariate" class="w-full h-full object-contain object-left-top"/>
+                   </div>
+                   <p class="text-gray-500 text-sm mt-2 text-center">Bivariate Color Legend
+                   </p>
+                 </div>
+
+               </div>
+
+               <div class="text-content pl-8 pr-16 mb-4">
+                 <div class="flex flex-col gap-6">
+                   <div>
+                     <h4 class="section-title ">Spatial Correlation of PM2.5 Exposure and Population Density in Switzerland</h4>
+
+                     <p class="content-text mb-4">
+                       The map reveals that many regions in northern and central Switzerland are marked in dark purples and grays, indicating areas with both high PM2.5 concentration and high population density. This suggests significant overlap between pollution exposure and population clusters, likely corresponding to more urbanized zones.                     </p>
+                     <p class="content-text mb-4">
+                       In contrast, the southern and alpine regions are mostly shown in light blue or pink, representing low pollution and low population. Overall, the map highlights a spatial correlation between pollution burden and population distribution in Switzerland.
+                     </p>
+                   </div>
+
+
+
+                 </div>
+               </div>
+             </div>
+           </div>
+
+
+           <div v-if="selectedPollutantLabel === 'NO₂'">
+             <div class="content-card">
+               <div class="flex gap-12 mb-8 px-8 justify-start overflow-x-auto">
+                 <div class="w-[600px] flex-none ml-8">
+                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[320px]">
+                     <img :src="bivariate_NO2" alt="bivariate_NO2" class="w-full h-full object-center object-left-top"/>
+                   </div>
+                   <p class="text-gray-500 text-sm mt-2 text-center">Bivariate Map of NO₂ Exposure and Population Distribution</p>
+                 </div>
+                 <div class="w-[370px] flex-none ml-16">
+                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[340px]">
+                     <img :src="bivariate" alt="bivariate" class="w-full h-full object-contain object-left-top"/>
+                   </div>
+                   <p class="text-gray-500 text-sm mt-2 text-center">Bivariate Color Legend
+                   </p>
+                 </div>
+
+               </div>
+
+               <div class="text-content pl-8 pr-16 mb-4">
+                 <div class="flex flex-col gap-6">
+                   <div>
+                     <h4 class="section-title ">Spatial Correlation of NO₂ Exposure and Population Density in Switzerland</h4>
+
+                     <p class="content-text mb-4">
+                       This bivariate map visualizes the spatial overlap between NO₂ concentration and population density in Switzerland. Darker areas, notably in the north, center, and northwest—such as around Zurich and Bern—indicate regions with both high pollution and high population, suggesting elevated exposure risks.                     </p>
+                     <p class="content-text mb-4">
+                       In contrast, the southern and southeastern areas appear lighter, reflecting both lower pollution and population levels. Overall, the map highlights key zones where pollution and population intersect, offering valuable guidance for environmental and public health strategies.
+                     </p>
+                   </div>
+
+                 </div>
+               </div>
+             </div>
+           </div>
+
+
+           <div v-else-if="selectedPollutantLabel === 'PM10'">
+             <div class="content-card">
+               <div class="flex gap-12 mb-8 px-8 justify-start overflow-x-auto">
+                 <div class="w-[600px] flex-none ml-8">
+                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[320px]">
+                     <img :src="bivariate_PM10" alt="bivariate_PM10" class="w-full h-full object-center object-left-top"/>
+                   </div>
+                   <p class="text-gray-500 text-sm mt-2 text-center">Bivariate Map of PM10 Exposure and Population Distribution</p>
+                 </div>
+                 <div class="w-[370px] flex-none ml-16">
+                   <div class="bg-gray-100 rounded-lg overflow-hidden h-[340px]">
+                     <img :src="bivariate" alt="bivariate" class="w-full h-full object-contain object-left-top"/>
+                   </div>
+                   <p class="text-gray-500 text-sm mt-2 text-center">Bivariate Color Legend
+                   </p>
+                 </div>
+
+               </div>
+
+               <div class="text-content pl-8 pr-16 mb-4">
+                 <div class="flex flex-col gap-6">
+                   <div>
+                     <h4 class="section-title ">Spatial Correlation of PM10 Exposure and Population Density in Switzerland</h4>
+
+                     <p class="content-text mb-4">
+                       This map illustrates the spatial intersection between PM₁₀ concentration and population density across Switzerland. Most areas appear in light to medium red shades, suggesting moderate pollution and population levels. However, darker red patches are visible in the north, around Zurich, and some eastern regions—indicating both high pollution and high population density and thus higher exposure risk.
+                     </p>
+                     <p class="content-text mb-4">
+                       In contrast, southern mountainous areas, such as the southern part of Ticino, show high pollution but low population, resulting in lower overall exposure concern.                      </p>
+                   </div>
+
+
+
+                 </div>
+               </div>
+             </div>
+           </div>
+
+
+
+
         </div>
-        
+
+
+
        <div class="chart-container">
-          <h1 class="text-1xl font-bold mb-2">Pie charts (Year 2020)</h1>
-          <h3>Percentage of population exposed to different concentration categories of {{ selectedPollutantLabel }} contaminant</h3>
-            <p v-if="selectedPollutantLabel === 'NO₂'"> 
-              <img :src="piechart_NO2" alt="piechart_NO2" class="image-row"/>
-            </p>
-            <p v-else-if="selectedPollutantLabel === 'PM2.5'">
-              <img :src="piechart_PM2P5" alt="piechart_PM2P5" class="image-row"/>
-            </p>
-            <p v-else-if="selectedPollutantLabel === 'PM10'">
-              <img :src="piechart_PM10" alt="piechart_PM10" class="image-row"/>
-            </p>
+         <h2 class="text-2xl font-semibold mb-8">Pie charts (Year 2020)</h2>
+          <div v-if="selectedPollutantLabel === 'NO₂'" >
+            <div class="flex  ">
+              <div class="w-1/2 flex-none ">
+                <div class="flex flex-col items-center  ">
+                  <div class="bg-gray-100 rounded-lg overflow-hidden h-[320px] w-[380px] max-w-[400px]">
+                    <img :src="piechart_NO2" alt="piechart_NO2"
+                         class="w-full h-full object-center"/>
+                  </div>
+                  <p class="text-gray-500 text-sm text-center mt-2">
+                    Pie Chart of Population Exposure to NO₂ Levels (2020)
+                  </p>
+                </div>
+              </div>
+              <div class="w-1/2 flex-none pr-8 pb-8 mt-12">
+                <div class="flex flex-col gap-6 h-full">
+                  <div>
+                    <h4 class="section-title">Population Exposure Distribution to NO₂ Pollution in 2020
+                    </h4>
+                    <p class="content-text mb-4 pr-24">
+                      This pie chart shows the proportion of the Swiss population exposed to two different NO₂ concentration levels in 2020. Approximately 59.9% of the population was exposed to class 2 (moderate level), while 40.1% experienced class 1 (lower level). This indicates that nearly half of the population lived in areas with relatively low nitrogen dioxide pollution, and the other half in areas with moderate pollution, with no high exposure zones (class 3) present in this dataset.
+
+                    </p>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+
+         <div v-else-if="selectedPollutantLabel === 'PM2.5'" >
+           <div class="flex  ">
+             <div class="w-1/2 flex-none ">
+               <div class="flex flex-col items-center  ">
+                 <div class="bg-gray-100 rounded-lg overflow-hidden h-[320px] w-[380px] max-w-[400px]">
+                   <img :src="piechart_PM2P5" alt="piechart_PM2P5"
+                        class="w-full h-full object-center"/>
+                 </div>
+                 <p class="text-gray-500 text-sm text-center mt-2">
+                   Pie Chart of Population Exposure to PM2.5 Levels (2020)
+                 </p>
+               </div>
+             </div>
+             <div class="w-1/2 flex-none pr-8 pb-8 mt-12">
+               <div class="flex flex-col gap-6 h-full">
+                 <div>
+                   <h4 class="section-title">Pie Chart of Population Exposure to PM2.5 Levels (2020)
+                   </h4>
+                   <p class="content-text mb-4 pr-24">
+                     This pie chart illustrates the distribution of population exposure to different PM2.5 concentration classes in Switzerland in 2020. Class 2 accounts for the overwhelming majority, with 96% of the population exposed to this concentration level. Only 3.37% and 0.63% are exposed to class 3 and class 1, respectively. This suggests that most of the population resides in areas with moderate PM2.5 pollution, while high exposure (class 3) is relatively rare, and very low exposure (class 1) is minimal.
+                   </p>
+
+                 </div>
+               </div>
+             </div>
+
+           </div>
+
+         </div>
+
+         <div v-else-if="selectedPollutantLabel === 'PM10'" >
+           <div class="flex  ">
+             <div class="w-1/2 flex-none ">
+               <div class="flex flex-col items-center  ">
+                 <div class="bg-gray-100 rounded-lg overflow-hidden h-[320px] w-[380px] max-w-[400px]">
+                   <img :src="piechart_PM10" alt="piechart_PM10"
+                        class="w-full h-full object-center"/>
+                 </div>
+                 <p class="text-gray-500 text-sm text-center mt-2">
+                   Pie Chart of Population Exposure to PM10 Levels (2020)
+                 </p>
+               </div>
+             </div>
+             <div class="w-1/2 flex-none pr-8 pb-8 mt-12">
+               <div class="flex flex-col gap-6 h-full">
+                 <div>
+                   <h4 class="section-title">Pie Chart of Population Exposure to PM10 Levels (2020)
+                   </h4>
+                   <p class="content-text mb-4 pr-24">
+                     This pie chart shows the distribution of population exposed to different levels of PM₁₀ concentration in 2020. The vast majority of the population (97.6%) was exposed to level 2 concentration, while only 2.4% experienced level 1 and a negligible 0.6% experienced level 3. This suggests that PM₁₀ levels in Switzerland were relatively uniform and generally moderate, with very limited population exposure to high or very low pollutant levels.
+                   </p>
+
+                 </div>
+               </div>
+             </div>
+
+           </div>
+
+         </div>
+
+
+
+
         </div>
 
         
@@ -153,7 +384,7 @@ import piechart_PM2P5 from '@/assets/piechart_PM2P5.png';
 import bivariate_NO2 from '@/assets/bivariate_NO2.png';
 import bivariate_PM10 from '@/assets/bivariate_PM10.png';
 import bivariate_PM2P5 from '@/assets/bivariate_PM2P5.png';
-import workflow1Bg from '@/assets/workflow1.jpg';
+import workflow1Bg from '@/assets/瑞士2.jpg';
 import LC from '@/assets/LC.png';
 
 // Sample data
@@ -247,7 +478,7 @@ const tableDataClass = ref([
 }
 
 .content-section {
-  padding: 4rem 2rem;
+  padding: 4rem 6rem;
   flex-grow: 1;
 }
 
@@ -290,7 +521,7 @@ const tableDataClass = ref([
 .results-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .chart-container {
@@ -550,5 +781,12 @@ const tableDataClass = ref([
   gap: 2rem; /* espacio entre imágenes */
   flex-wrap: wrap; /* por si en pantallas pequeñas se apilan */
   margin-bottom: 2rem;
+}
+.section-title {
+  @apply text-xl font-semibold mb-4;
+}
+
+.subsection-title {
+  @apply text-lg font-medium mb-2;
 }
 </style>
